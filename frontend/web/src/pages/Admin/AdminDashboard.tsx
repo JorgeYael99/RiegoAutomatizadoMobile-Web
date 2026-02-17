@@ -25,7 +25,7 @@ export default function Admin() {
     stock: "",
   });
 
-  const API_URL = "http://localhost:5000/api/products";
+  const API_URL = "https://riego-automatizado-mobile-web.vercel.app/api/products";
 
   // 🔹 Obtener productos
   const fetchProducts = async () => {
