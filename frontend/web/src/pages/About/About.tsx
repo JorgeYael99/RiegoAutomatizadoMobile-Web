@@ -1,6 +1,18 @@
 import "./About.css";
+import { useEffect, useState } from "react";
 
 export default function About() {
+  const [mapsKey, setMapsKey] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/maps-key")
+      .then(res => res.json())
+      .then(data => {
+        setMapsKey(data.key);
+      })
+      .catch(err => console.error("Error al obtener la API de Google Maps", err));
+  }, []);
+
   return (
     <section className="about">
 
@@ -51,12 +63,13 @@ export default function About() {
         <h3>Dónde estamos</h3>
 
         <div className="map-container">
-          {/* MAPA PROVISIONAL */}
-          <iframe
-            title="mapa"
-            src="https://www.google.com/maps?q=Mexico&output=embed"
-            loading="lazy"
-          />
+          {mapsKey && (
+            <iframe
+              title="mapa"
+                src={`https://www.google.com/maps/embed/v1/place?key=${mapsKey}&q=19.362,-99.049`}
+              loading="lazy"
+            />
+          )}
         </div>
       </div>
 

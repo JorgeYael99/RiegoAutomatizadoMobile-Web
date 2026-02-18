@@ -5,6 +5,7 @@ from routes.auth_routes import auth
 from routes.product_routes import product_bp
 import config
 from database import get_db_connection
+from config import GOOGLE_MAPS_API_KEY
 
 #  Verificar conexión a DB
 try:
@@ -15,6 +16,10 @@ except Exception as e:
     print("Error de conexion:", e)
 
 app = Flask(__name__)
+@app.route('/api/maps-key', methods=['GET'])
+def get_maps_key():
+    return jsonify({"key": config.GOOGLE_MAPS_API_KEY})
+
 app.config["JWT_SECRET_KEY"] = config.JWT_SECRET_KEY
 
 jwt = JWTManager(app)

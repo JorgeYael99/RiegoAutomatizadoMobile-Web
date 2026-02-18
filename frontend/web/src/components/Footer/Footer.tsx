@@ -1,7 +1,19 @@
 import "./Footer.css";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 
 export default function Footer() {
+  const [mapsKey, setMapsKey] = useState("");
+
+  useEffect(() => {
+    fetch("http://localhost:5000/api/maps-key")
+      .then(res => res.json())
+      .then(data => {
+        setMapsKey(data.key);
+      })
+      .catch(err => console.error("Error al obtener la API de Google Maps", err));
+  }, []);
+
   return (
     <footer className="footer fade-up">
       <div className="footer-content">
@@ -31,11 +43,13 @@ export default function Footer() {
         </div>
 
         <div className="footer-section map">
-          <iframe
-            title="Mapa HuertoSmart"
-            src="https://www.google.com/maps?q=Mexico&output=embed"
-            loading="lazy"
-          />
+          {mapsKey && (
+            <iframe
+              title="Mapa HuertoSmart"
+              src={`https://www.google.com/maps/embed/v1/place?key=${mapsKey}&q=19.362,-99.049`}
+              loading="lazy"
+            />
+          )}
         </div>
       </div>
 
