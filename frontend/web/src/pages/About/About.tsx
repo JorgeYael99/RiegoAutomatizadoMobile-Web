@@ -5,7 +5,7 @@ export default function About() {
   const [mapsKey, setMapsKey] = useState("");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/maps-key")
+    fetch("https://riego-automatizado-mobile-web.vercel.app/api/maps-key")
       .then(res => res.json())
       .then(data => {
         setMapsKey(data.key);
