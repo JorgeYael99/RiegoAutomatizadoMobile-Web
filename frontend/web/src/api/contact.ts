@@ -1,23 +1,33 @@
 import axios from "axios";
+
 const API_URL = "https://riego-automatizado-mobile-web.vercel.app/api/contact";
-// Enviar mensaje de contacto (público)
+
+const getAuthHeaders = () => ({
+  headers: {
+    Authorization: `Bearer ${localStorage.getItem("token")}`
+  }
+});
+
+// Público: NO necesita token
 export const sendContactMessage = (data: {
   nombre: string;
   email: string;
   asunto: string;
   mensaje: string;
 }) => axios.post(`${API_URL}`, data);
-// Obtener todos los mensajes (admin)
-export const getContactMessages = () => axios.get(`${API_URL}`);
-// Obtener contador de no leídos (admin)
+
+// Admin: SÍ necesitan token
+export const getContactMessages = () => 
+  axios.get(`${API_URL}`, getAuthHeaders());
+
 export const getUnreadMessagesCount = () => 
-  axios.get(`${API_URL}/unread-count`);
-// Marcar como leído (admin)
+  axios.get(`${API_URL}/unread-count`, getAuthHeaders());
+
 export const markMessageAsRead = (id: number) => 
-  axios.put(`${API_URL}/${id}/read`);
-// Marcar como no leído (admin)
+  axios.put(`${API_URL}/${id}/read`, {}, getAuthHeaders());
+
 export const markMessageAsUnread = (id: number) => 
-  axios.put(`${API_URL}/${id}/unread`);
-// Eliminar mensaje (admin)
+  axios.put(`${API_URL}/${id}/unread`, {}, getAuthHeaders());
+
 export const deleteMessage = (id: number) => 
-  axios.delete(`${API_URL}/${id}`);
+  axios.delete(`${API_URL}/${id}`, getAuthHeaders());
