@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from 'react';
 
 interface CartItem {
-  id: string;
+  id: number;
   name: string;
   price: number;
   quantity: number;
@@ -69,7 +69,7 @@ export default function PayPalButton({ total, items, onSuccess }: PayPalButtonPr
           label: 'paypal',
           height: 40
         },
-        createOrder: function(data: any, actions: any) {
+        createOrder: function(_data: any, actions: any) {
           return actions.order.create({
             intent: 'CAPTURE',
             purchase_units: [{
@@ -103,7 +103,7 @@ export default function PayPalButton({ total, items, onSuccess }: PayPalButtonPr
           console.error('Error PayPal:', err);
           setError('Hubo un error al procesar el pago. Por favor intenta de nuevo.');
         },
-        onCancel: function(data: any) {
+        onCancel: function(_data: any) {
           console.log('Pago cancelado');
         }
       }).render(paypalRef.current);

@@ -49,7 +49,7 @@ export default function Cart() {
           <h3>Total: ${total} MXN</h3>
           
           {/* Botón de PayPal */}
-          <PayPalButton total={total} onSuccess={handlePaymentSuccess} />
+          <PayPalButton total={total} items={cart} onSuccess={handlePaymentSuccess} />
         </>
       )}
     </section>
