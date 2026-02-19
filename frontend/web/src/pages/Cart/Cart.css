@@ -1,5 +1,20 @@
 .cart-page {
   padding: 60px 10%;
+  min-height: 80vh;
+}
+
+.cart-page h2 {
+  font-size: 2.5rem;
+  color: var(--primary);
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.cart-page > p {
+  text-align: center;
+  font-size: 1.2rem;
+  color: #666;
+  margin-top: 3rem;
 }
 
 .cart-item {
@@ -10,6 +25,12 @@
   border-radius: var(--radius);
   box-shadow: var(--shadow);
   margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.cart-item:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
 }
 
 .cart-item img {
@@ -19,7 +40,155 @@
   border-radius: var(--radius);
 }
 
+.cart-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.cart-info h4 {
+  font-size: 1.2rem;
+  color: var(--text);
+  margin: 0;
+}
+
+.cart-info span {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: var(--primary);
+}
+
 .cart-info input {
-  width: 60px;
+  width: 80px;
+  padding: 8px;
   margin: 10px 0;
+  border: 2px solid #e0e0e0;
+  border-radius: var(--radius);
+  font-size: 1rem;
+  text-align: center;
+}
+
+.cart-info input:focus {
+  outline: none;
+  border-color: var(--primary);
+}
+
+.cart-info button {
+  background-color: #ff4444;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  font-size: 0.9rem;
+  font-weight: 600;
+  transition: background-color 0.3s ease;
+  width: fit-content;
+}
+
+.cart-info button:hover {
+  background-color: #cc0000;
+}
+
+.cart-page h3 {
+  font-size: 1.8rem;
+  color: var(--text);
+  margin: 2rem 0;
+  text-align: right;
+  border-top: 2px solid #e0e0e0;
+  padding-top: 1.5rem;
+}
+
+/* Estilos para el contenedor de PayPal */
+.paypal-container {
+  margin-top: 2rem;
+  max-width: 400px;
+  margin-left: auto;
+  margin-right: auto;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: var(--radius);
+  border: 1px solid #e0e0e0;
+}
+
+.paypal-container p {
+  text-align: center;
+  margin-bottom: 1rem;
+  color: #666;
+  font-weight: 500;
+}
+
+/* Estilos para el mensaje informativo de PayPal */
+.paypal-test-message {
+  font-size: 0.85rem;
+  color: #666;
+  text-align: center;
+  margin-top: 1rem;
+  padding: 0.5rem;
+  background: #f0f8ff;
+  border-radius: 4px;
+  border: 1px solid #b8daff;
+}
+
+.paypal-test-message strong {
+  color: #0070ba;
+  font-weight: 600;
+}
+
+/* Estilos para el botón de recarga cuando hay error */
+.paypal-reload-button {
+  background: #0070ba;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background-color 0.3s ease;
+}
+
+.paypal-reload-button:hover {
+  background: #005ea6;
+}
+
+.paypal-error-message {
+  color: #ff4444;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .cart-page {
+    padding: 40px 5%;
+  }
+
+  .cart-item {
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+  .cart-info {
+    align-items: center;
+  }
+
+  .cart-item img {
+    width: 150px;
+    height: 150px;
+  }
+
+  .cart-page h3 {
+    text-align: center;
+  }
+
+  .paypal-container {
+    max-width: 100%;
+  }
+
+  .paypal-test-message {
+    font-size: 0.8rem;
+    padding: 0.4rem;
+  }
 }

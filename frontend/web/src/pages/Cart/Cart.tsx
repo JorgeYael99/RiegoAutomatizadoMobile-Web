@@ -1,8 +1,17 @@
+// frontend/web/src/pages/Cart/Cart.tsx
 import "./Cart.css";
 import { useCart } from "../../context/CartContext";
+import PayPalButton from "./PaypalButton"; // Cambié la ruta porque está en la misma carpeta
 
 export default function Cart() {
-  const { cart, removeFromCart, updateQuantity, total } = useCart();
+  const { cart, removeFromCart, updateQuantity, total, clearCart } = useCart();
+
+  const handlePaymentSuccess = () => {
+    if (clearCart) {
+      clearCart();
+      alert("¡Gracias por tu compra!");
+    }
+  };
 
   return (
     <section className="cart-page fade-up">
@@ -24,7 +33,7 @@ export default function Cart() {
                   type="number"
                   min={1}
                   value={item.quantity}
-                    aria-label={`Cantidad de ${item.name}`} 
+                  aria-label={`Cantidad de ${item.name}`}
                   onChange={(e) =>
                     updateQuantity(item.id, Number(e.target.value))
                   }
@@ -38,6 +47,9 @@ export default function Cart() {
           ))}
 
           <h3>Total: ${total} MXN</h3>
+          
+          {/* Botón de PayPal */}
+          <PayPalButton total={total} onSuccess={handlePaymentSuccess} />
         </>
       )}
     </section>
