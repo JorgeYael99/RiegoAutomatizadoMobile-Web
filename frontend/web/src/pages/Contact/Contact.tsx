@@ -1,5 +1,7 @@
 import { useState } from "react";
 import "./Contact.css";
+import { sendContactMessage } from "../../api/contact"; // Agregar import
+
 
 export default function Contact() {
   const [formData, setFormData] = useState({
@@ -20,23 +22,31 @@ export default function Contact() {
     }));
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsSubmitting(true);
-    setSubmitMessage("");
-
-    // Simulación de envío
-    setTimeout(() => {
-      setIsSubmitting(false);
-      setSubmitMessage("¡Mensaje enviado con éxito! Te contactaremos pronto.");
-      setFormData({
-        nombre: "",
-        email: "",
-        asunto: "",
-        mensaje: ""
-      });
-    }, 1500);
-  };
+const handleSubmit = async (e: React.FormEvent) => {
+  e.preventDefault();
+  setIsSubmitting(true);
+  setSubmitMessage("");
+  try {
+    const response = await sendContactMessage({
+      nombre: formData.nombre,
+      email: formData.email,
+      asunto: formData.asunto,
+      mensaje: formData.mensaje
+    });
+    setSubmitMessage("¡Mensaje enviado con éxito! Te contactaremos pronto.");
+    setFormData({
+      nombre: "",
+      email: "",
+      asunto: "",
+      mensaje: ""
+    });
+  } catch (error) {
+    console.error("Error enviando mensaje:", error);
+    setSubmitMessage("Error al enviar el mensaje. Intenta de nuevo.");
+  } finally {
+    setIsSubmitting(false);
+  }
+};
 
   return (
     <div className="contact-page fade-up">

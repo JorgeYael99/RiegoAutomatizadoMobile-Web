@@ -3,6 +3,7 @@ from flask_jwt_extended import JWTManager
 from flask_cors import CORS
 from routes.auth_routes import auth
 from routes.product_routes import product_bp
+from routes.contact_routes import contact_bp
 import config
 from database import get_db_connection
 from config import GOOGLE_MAPS_API_KEY
@@ -61,6 +62,15 @@ CORS(app, resources={
 #  Blueprints
 app.register_blueprint(auth, url_prefix="/api/auth")
 app.register_blueprint(product_bp, url_prefix="/api/products")
+app.register_blueprint(contact_bp, url_prefix="/api/contact")
 
+from models.contact_model import ContactMessage
+
+try:
+    deleted = ContactMessage.delete_old_messages(days=15)
+    print(f"Auto-limpieza: {deleted} mensajes antiguos eliminados")
+except Exception as e:
+    print(f"Error en auto-limpieza: {e}")
+    
 if __name__ == "__main__":
     app.run(debug=True)

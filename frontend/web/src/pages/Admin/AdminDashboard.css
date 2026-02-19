@@ -108,6 +108,7 @@
 .product-card button:hover {
   background-color: #dc2626;
 }
+
 .admin-layout {
   display: flex;
   min-height: 100vh;
@@ -139,10 +140,33 @@
   cursor: pointer;
   opacity: 0.8;
   transition: 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.5rem;
+  border-radius: 8px;
 }
 
 .admin-sidebar li:hover {
   opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.admin-sidebar li.active {
+  background: var(--primary, #2e7d32);
+  opacity: 1;
+}
+
+/* BADGE ROJO */
+.badge {
+  background: #e53935;
+  color: white;
+  border-radius: 50%;
+  padding: 2px 8px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  min-width: 20px;
+  text-align: center;
 }
 
 /* MAIN CONTENT */
@@ -177,7 +201,7 @@
   background: white;
   padding: 1.5rem;
   border-radius: 12px;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
 .stat-card h3 {
@@ -198,7 +222,7 @@
   background: white;
   border-radius: 12px;
   overflow: hidden;
-  box-shadow: 0 8px 25px rgba(0,0,0,0.05);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
 .admin-table th,
@@ -225,17 +249,90 @@
   border-radius: 6px;
 }
 
+/* FILAS NO LEÍDAS */
+.unread-row {
+  background-color: #fff3e0 !important;
+}
+
+.unread-row td {
+  font-weight: 600;
+}
+
+/* STATUS ICONS */
+.status-icon {
+  font-size: 1.2rem;
+}
+
+.status-icon.unread {
+  color: #e53935;
+}
+
+.status-icon.read {
+  color: #64748b;
+}
+
+/* BOTONES DE ACCIÓN EN TABLA */
+.action-buttons {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.action-buttons button {
+  padding: 0.4rem 0.8rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 0.85rem;
+  transition: 0.2s ease;
+}
+
+.view-btn {
+  background: #3b82f6;
+  color: white;
+}
+
+.view-btn:hover {
+  background: #2563eb;
+}
+
+.toggle-btn {
+  color: white;
+}
+
+.toggle-btn.read-action {
+  background: #10b981;
+}
+
+.toggle-btn.read-action:hover {
+  background: #059669;
+}
+
+.toggle-btn.unread-action {
+  background: #f59e0b;
+}
+
+.toggle-btn.unread-action:hover {
+  background: #d97706;
+}
+
 .delete-btn {
   background: #ef4444;
   color: white;
-  border: none;
-  padding: 0.4rem 0.7rem;
-  border-radius: 6px;
-  cursor: pointer;
 }
 
 .delete-btn:hover {
   background: #dc2626;
+}
+
+/* EMPTY STATE */
+.empty-state {
+  background: white;
+  padding: 3rem;
+  border-radius: 12px;
+  text-align: center;
+  color: #64748b;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
 }
 
 /* BUTTON */
@@ -252,6 +349,7 @@
 .primary-btn:hover {
   background: #4f46e5;
 }
+
 /* MODAL */
 
 .modal-overlay {
@@ -270,7 +368,7 @@
   max-width: 90%;
   padding: 2rem;
   border-radius: 14px;
-  box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.2s ease;
 }
 
@@ -295,7 +393,7 @@
 .modal-form textarea:focus {
   outline: none;
   border-color: #6366f1;
-  box-shadow: 0 0 0 3px rgba(99,102,241,0.15);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
 }
 
 .modal-actions {
@@ -317,7 +415,80 @@
   background: #d1d5db;
 }
 
+/* MODAL DE MENSAJE */
+.message-modal {
+  max-width: 600px;
+}
+
+.message-details {
+  margin-bottom: 1.5rem;
+}
+
+.message-details p {
+  margin: 0.5rem 0;
+  color: #374151;
+}
+
+.message-content {
+  background: #f9fafb;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.message-content h4 {
+  margin-bottom: 0.5rem;
+  color: #111827;
+}
+
+.message-content p {
+  color: #4b5563;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
 @keyframes fadeIn {
-  from { opacity: 0; transform: scale(0.95); }
-  to { opacity: 1; transform: scale(1); }
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* RESPONSIVE */
+@media (max-width: 768px) {
+  .admin-layout {
+    flex-direction: column;
+  }
+
+  .admin-sidebar {
+    width: 100%;
+    padding: 1rem;
+  }
+
+  .admin-sidebar ul {
+    display: flex;
+    gap: 1rem;
+    overflow-x: auto;
+  }
+
+  .admin-sidebar li {
+    margin-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .admin-main {
+    padding: 1rem;
+  }
+
+  .action-buttons {
+    flex-direction: column;
+  }
+
+  .action-buttons button {
+    width: 100%;
+  }
 }
