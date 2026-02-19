@@ -37,6 +37,36 @@
   transition: width 0.3s;
 }
 
-.nav-links a:hover::after {
-  width: 100%;
+.btn-logout {
+  background: rgba(231, 76, 60, 0.05); 
+  color: #077d19;
+  border: 3px solid #bcff03;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+.btn-logout:hover {
+  background: #469a3196;
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+}
+
+.btn-login, .btn-admin {
+  background: #27ae60;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 12px;
+  text-decoration: none;
+  font-weight: 600;
+  box-shadow: 0 4px 10px rgba(39, 174, 96, 0.2);
+}
+
+.btn-login:hover {
+  background: #2ecc71;
+  transform: translateY(-2px);
 }
