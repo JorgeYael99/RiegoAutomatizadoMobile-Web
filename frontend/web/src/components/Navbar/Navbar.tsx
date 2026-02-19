@@ -14,6 +14,7 @@ export default function Navbar() {
         <Link to="/products">Productos</Link>
         <Link to="/about">Nosotros</Link>
         <Link to="/cart">Carrito</Link>
+        <Link to="/Contact">Contacto</Link>
 
         {!token && (
           <>

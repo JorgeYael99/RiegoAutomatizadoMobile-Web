@@ -5,6 +5,7 @@ import Home from "../pages/Home/Home";
 import About from "../pages/About/About";
 import Products from "../pages/Products/Products";
 import Cart from "../pages/Cart/Cart";
+import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import AdminDashboard from "../pages/Admin/AdminDashboard";
@@ -21,6 +22,7 @@ export default function AppRouter() {
         <Route path="/about" element={<About />} />
         <Route path="/products" element={<Products />} />
         <Route path="/cart" element={<Cart />} />
+        <Route path="/Contact" element={<Contact />} />
 
         {/* Auth */}
         <Route path="/login" element={<Login />} />
