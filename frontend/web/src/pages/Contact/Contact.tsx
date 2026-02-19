@@ -27,7 +27,7 @@ const handleSubmit = async (e: React.FormEvent) => {
   setIsSubmitting(true);
   setSubmitMessage("");
   try {
-    const response = await sendContactMessage({
+    await sendContactMessage({
       nombre: formData.nombre,
       email: formData.email,
       asunto: formData.asunto,
