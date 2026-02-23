@@ -1,130 +1,63 @@
-.product-card.amazon {
-  background: white;
-  border-radius: 12px;
-  overflow: hidden;
-  border: 1px solid #ddd;
-  transition: all 0.25s ease;
-  position: relative;
-}
-
-.product-card.amazon:hover {
-  box-shadow: 0 12px 28px rgba(0,0,0,0.15);
-  transform: translateY(-5px);
-}
-
-/* Badge oferta */
-.badge {
+/* Badge cantidad en carrito */
+.cart-count-badge {
   position: absolute;
   top: 10px;
-  left: 10px;
-  background: #cc0c39;
+  right: 10px;
+  background: #ff9900;
   color: white;
-  font-size: 0.8rem;
-  padding: 5px 10px;
-  border-radius: 5px;
-  font-weight: bold;
-}
-
-/* Imagen */
-.product-card.amazon img {
-  width: 100%;
-  height: 240px;
-  object-fit: contain;
-  background: #fff;
-  padding: 10px;
-}
-
-/* Contenido */
-.card-content {
-  padding: 16px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-/* Nombre */
-.card-content h4 {
-  font-size: 0.95rem;
-  font-weight: 500;
-  color: #0f1111;
-  line-height: 1.3;
-}
-
-/* Rating */
-.rating {
-  font-size: 0.9rem;
-  color: #f08804;
-}
-
-/* 🔥 DESCRIPCIÓN EXTRA PRO */
-.description {
-  font-size: 0.85rem;
-  color: #565959;
-  display: -webkit-box;
-  -webkit-line-clamp: 3; /* máximo 3 líneas */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  white-space: pre-line; /* 👈 permite saltos de línea */
-  line-height: 1.4;
-  transition: all 0.3s ease;
-}
-
-.description.expanded {
-  -webkit-line-clamp: unset;
-  display: block;
-}
-
-/* Botón ver más */
-.see-more {
-  font-size: 0.8rem;
-  color: #007185;
-  cursor: pointer;
-  font-weight: 500;
-}
-
-.see-more:hover {
-  text-decoration: underline;
-}
-
-/* Precio */
-.price {
-  font-size: 1.4rem;
-  font-weight: bold;
-  color: #03770b;
-}
-
-/* Botón Amazon */
-.card-content button {
-  background: #ffd814;
-  border: 1px solid #fcd200;
-  padding: 10px;
+  padding: 4px 8px;
   border-radius: 20px;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: bold;
+  z-index: 2;
+}
+.image-container {
+  position: relative;
+}
+/* Notificación */
+.notification {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: rgba(0, 0, 0, 0.9);
+  color: white;
+  padding: 10px 15px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  z-index: 1000;
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+/* Login prompt */
+.login-prompt {
+  background: #fff3cd;
+  border: 1px solid #ffc107;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 10px;
+  text-align: center;
+}
+.login-prompt p {
+  margin: 0 0 8px 0;
+  font-size: 0.85rem;
+  color: #856404;
+}
+.login-prompt-btn {
+  background: #28a745;
+  color: white;
+  border: none;
+  padding: 6px 16px;
+  border-radius: 4px;
   cursor: pointer;
-  transition: all 0.2s ease;
+  font-size: 0.85rem;
 }
-
-.card-content button:hover {
-  background: #f7ca00;
-}
-
-.card-content button:active {
-  transform: scale(0.97);
-}
-
-/* Responsive */
-@media (max-width: 900px) {
-  .product-card.amazon img {
-    height: 200px;
-  }
-}
-
-@media (max-width: 600px) {
-  .product-card.amazon img {
-    height: 180px;
-  }
-
-  .price {
-    font-size: 1.2rem;
-  }
+.disabled-btn {
+  opacity: 0.7;
+  cursor: not-allowed;
 }

@@ -1,10 +1,13 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { FiShoppingCart } from "react-icons/fi";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { token, rol, logout } = useAuth();
-
+  
+  const isAuthenticated = token && typeof token === 'string' && token.length > 0 && token !== "null" && token !== "undefined";
+  
   return (
     <nav className="navbar">
       <h2 className="logo">🌱 HuertoSmart</h2>
@@ -13,10 +16,14 @@ export default function Navbar() {
         <Link to="/">Inicio</Link>
         <Link to="/products">Productos</Link>
         <Link to="/about">Nosotros</Link>
-        <Link to="/cart">Carrito</Link>
-        <Link to="/Contact">Contacto</Link>
+        
+        {isAuthenticated && (
+          <Link to="/cart" className="cart-link">
+            <FiShoppingCart className="cart-icon" />
+          </Link>
+        )}
 
-        {!token && (
+        {!isAuthenticated && (
           <>
             <Link to="/login" className="btn-login">
               Iniciar sesión
@@ -27,13 +34,13 @@ export default function Navbar() {
           </>
         )}
 
-        {rol === "admin" && (
+        {isAuthenticated && rol === "admin" && (
           <Link to="/admin" className="btn-admin">
             Admin
           </Link>
         )}
 
-        {token && (
+        {isAuthenticated && (
           <button onClick={logout} className="btn-logout">
             Cerrar sesión
           </button>

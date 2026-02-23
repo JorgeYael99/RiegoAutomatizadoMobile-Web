@@ -40,6 +40,9 @@ export default function Footer() {
           <p>📍 México</p>
           <p>📧 contacto@huertosmart.com</p>
           <p>📞 +52 55 0000 0000</p>
+          <Link to="/contact" className="contact-btn">
+            Enviar mensaje
+          </Link>
         </div>
 
         <div className="footer-section map">
