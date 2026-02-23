@@ -16,6 +16,7 @@ export default function Navbar() {
         <Link to="/">Inicio</Link>
         <Link to="/products">Productos</Link>
         <Link to="/about">Nosotros</Link>
+        <Link to="/Contact">Contacto</Link>
         
         {isAuthenticated && (
           <Link to="/cart" className="cart-link">
