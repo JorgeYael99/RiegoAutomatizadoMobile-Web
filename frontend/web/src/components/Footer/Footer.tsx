@@ -30,14 +30,7 @@ export default function Footer() {
           <ul>
             <li><Link to="/">Inicio</Link></li>
             <li><Link to="/about">Nosotros</Link></li>
-            <li className="dropdown">
-              <Link to="/products">Productos</Link>
-              <ul className="dropdown-menu">
-                <li><Link to="/sensores">Sensores</Link></li>
-                <li><Link to="/plantas">Plantas</Link></li>
-                <li><Link to="/servicios">Servicios que vendemos</Link></li>
-              </ul>
-            </li>
+            <li><Link to="/products">Productos</Link></li>
             <li><Link to="/cart">Carrito</Link></li>
           </ul>
         </div>
