@@ -7,6 +7,65 @@
   to { opacity: 1; transform: translateY(0); }
 }
 
+.table-container {
+  overflow-x: auto;
+}
+
+.users-cards {
+  display: none;
+  grid-template-columns: 1fr;
+  gap: 1rem;
+}
+
+.user-card-mobile {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.card-name {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1e293b;
+  margin: 0;
+  word-break: break-word;
+}
+
+.card-details {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.card-email {
+  font-size: 0.9rem;
+  color: #6b7280;
+  margin: 0;
+  word-break: break-word;
+}
+
+.card-date {
+  font-size: 0.8rem;
+  color: #9ca3af;
+  margin: 0;
+}
+
+.card-actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
 .user-name {
   font-weight: 500;
   color: #1e293b;
@@ -110,5 +169,21 @@
 
   .action-buttons {
     flex-direction: column;
+  }
+
+  .table-container {
+    display: none;
+  }
+
+  .users-cards {
+    display: grid;
+  }
+
+  .card-actions {
+    flex-direction: column;
+  }
+
+  .card-actions .btn {
+    width: 100%;
   }
 }

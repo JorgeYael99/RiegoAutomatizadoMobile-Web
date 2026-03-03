@@ -186,6 +186,44 @@ export default function UsersManagement() {
         </table>
       </div>
 
+      {/* Mobile Cards Layout */}
+      <div className="users-cards">
+        {filteredUsers.map((user) => (
+          <div key={user.id} className="user-card-mobile">
+            <div className="card-header">
+              <h3 className="card-name">{user.nombre}</h3>
+              <span className={`role-badge ${user.rol}`}>
+                {user.rol === "admin" ? "👑 Admin" : "Cliente"}
+              </span>
+            </div>
+            <div className="card-details">
+              <p className="card-email">{user.email}</p>
+              <p className="card-date">
+                Registrado: {user.created_at ? new Date(user.created_at).toLocaleDateString("es-ES") : "-"}
+              </p>
+            </div>
+            <div className="card-actions">
+              <button className="btn btn-sm btn-secondary" onClick={() => openEditModal(user)}>
+                Editar
+              </button>
+              <button className="btn btn-sm" onClick={() => openRoleModal(user)}>
+                Cambiar Rol
+              </button>
+              {user.rol !== "admin" && (
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(user.id)}>
+                  Eliminar
+                </button>
+              )}
+            </div>
+          </div>
+        ))}
+        {filteredUsers.length === 0 && (
+          <div className="empty-state">
+            <p>No se encontraron usuarios</p>
+          </div>
+        )}
+      </div>
+
       {/* Edit Modal */}
       {showEditModal && (
         <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
