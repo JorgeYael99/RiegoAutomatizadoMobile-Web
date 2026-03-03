@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX } from "react-icons/fi";
+import "./ProductsManagement.css";
 
 interface Product {
   id: number;
@@ -348,96 +349,6 @@ export default function ProductsManagement() {
           </div>
         </div>
       )}
-
-      <style>{`
-        .products-page {
-          animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .search-box {
-          position: relative;
-          max-width: 300px;
-          margin-bottom: 1.5rem;
-        }
-
-        .search-box input {
-          width: 100%;
-          padding: 0.75rem 1rem 0.75rem 2.5rem;
-          border: 1px solid #d1d5db;
-          border-radius: 8px;
-          font-size: 0.9rem;
-        }
-
-        .search-box svg {
-          position: absolute;
-          left: 0.75rem;
-          top: 50%;
-          transform: translateY(-50%);
-          color: #9ca3af;
-        }
-
-        .table-container {
-          overflow-x: auto;
-        }
-
-        .product-name {
-          font-weight: 500;
-          color: #1e293b;
-        }
-
-        .product-desc {
-          font-size: 0.8rem;
-          color: #6b7280;
-        }
-
-        .action-buttons {
-          display: flex;
-          gap: 0.5rem;
-        }
-
-        .btn-icon.danger {
-          color: #dc2626;
-        }
-
-        .btn-icon.danger:hover {
-          background: #fee2e2;
-        }
-
-        .empty-cell {
-          text-align: center;
-          padding: 2rem !important;
-          color: #9ca3af;
-        }
-
-        .loading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 300px;
-          color: #6b7280;
-        }
-
-        @media (max-width: 768px) {
-          .data-table {
-            font-size: 0.85rem;
-          }
-
-          .data-table th,
-          .data-table td {
-            padding: 0.5rem;
-          }
-
-          .data-table img {
-            width: 40px;
-            height: 40px;
-          }
-        }
-      `}</style>
     </div>
   );
 }

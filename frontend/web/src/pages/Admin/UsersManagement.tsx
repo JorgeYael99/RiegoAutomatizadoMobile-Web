@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { FiSearch, FiEdit2, FiTrash2, FiX, FiShield } from "react-icons/fi";
+import "./UsersManagement.css";
 import { updateUser, updateUserRole, deleteUser } from "../../api/users";
 
 interface User {
@@ -267,123 +268,6 @@ export default function UsersManagement() {
           </div>
         </div>
       )}
-
-      <style>{`
-        .users-page {
-          animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .user-name {
-          font-weight: 500;
-          color: #1e293b;
-        }
-
-        .role-badge {
-          display: inline-flex;
-          align-items: center;
-          gap: 0.25rem;
-          padding: 0.25rem 0.5rem;
-          border-radius: 9999px;
-          font-size: 0.8rem;
-          font-weight: 500;
-        }
-
-        .role-badge.admin {
-          background: #f3e8ff;
-          color: #7c3aed;
-        }
-
-        .role-badge.cliente {
-          background: #f3f4f6;
-          color: #6b7280;
-        }
-
-        .action-buttons {
-          display: flex;
-          gap: 0.5rem;
-        }
-
-        .btn-icon.danger {
-          color: #dc2626;
-        }
-
-        .btn-icon.danger:hover {
-          background: #fee2e2;
-        }
-
-        .empty-cell {
-          text-align: center;
-          padding: 2rem !important;
-          color: #9ca3af;
-        }
-
-        .loading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 300px;
-          color: #6b7280;
-        }
-
-        .role-options {
-          display: flex;
-          flex-direction: column;
-          gap: 0.75rem;
-        }
-
-        .role-option {
-          display: flex;
-          align-items: center;
-          gap: 1rem;
-          padding: 1rem;
-          border: 2px solid #e5e7eb;
-          border-radius: 12px;
-          background: white;
-          cursor: pointer;
-          transition: all 0.2s ease;
-          text-align: left;
-        }
-
-        .role-option:hover {
-          border-color: #2e7d32;
-          background: #f0fdf4;
-        }
-
-        .role-option.active {
-          border-color: #2e7d32;
-          background: #dcfce7;
-        }
-
-        .role-icon {
-          font-size: 1.5rem;
-        }
-
-        .role-label {
-          font-weight: 600;
-          color: #1e293b;
-        }
-
-        .role-desc {
-          font-size: 0.8rem;
-          color: #6b7280;
-          margin-left: auto;
-        }
-
-        @media (max-width: 768px) {
-          .data-table {
-            font-size: 0.85rem;
-          }
-
-          .action-buttons {
-            flex-direction: column;
-          }
-        }
-      `}</style>
     </div>
   );
 }

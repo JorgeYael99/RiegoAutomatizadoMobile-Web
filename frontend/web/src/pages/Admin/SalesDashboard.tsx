@@ -5,6 +5,7 @@ import {
   FiShoppingCart,
   FiTrendingUp,
 } from "react-icons/fi";
+import "./SalesDashboard.css";
 import {
   BarChart,
   Bar,
@@ -256,100 +257,6 @@ export default function SalesDashboard() {
           </div>
         </div>
       </div>
-
-      <style>{`
-        .sales-page {
-          animation: fadeIn 0.3s ease;
-        }
-
-        @keyframes fadeIn {
-          from { opacity: 0; transform: translateY(10px); }
-          to { opacity: 1; transform: translateY(0); }
-        }
-
-        .stats-grid {
-          display: grid;
-          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-          gap: 1.5rem;
-          margin-bottom: 2rem;
-        }
-
-        .stat-card {
-          background: white;
-          padding: 1.5rem;
-          border-radius: 12px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .stat-icon {
-          width: 48px;
-          height: 48px;
-          border-radius: 12px;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          margin-bottom: 1rem;
-        }
-
-        .stat-card h3 {
-          font-size: 0.875rem;
-          color: #6b7280;
-          margin: 0 0 0.5rem 0;
-          font-weight: 500;
-        }
-
-        .stat-value {
-          font-size: 1.75rem;
-          font-weight: 700;
-          color: #1e293b;
-        }
-
-        .charts-grid {
-          display: grid;
-          grid-template-columns: repeat(2, 1fr);
-          gap: 1.5rem;
-        }
-
-        .chart-card {
-          background: white;
-          padding: 1.5rem;
-          border-radius: 12px;
-          box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
-        }
-
-        .chart-card.full-width {
-          grid-column: 1 / -1;
-        }
-
-        .chart-card h3 {
-          font-size: 1rem;
-          font-weight: 600;
-          color: #1e293b;
-          margin: 0 0 1rem 0;
-        }
-
-        .chart-container {
-          width: 100%;
-        }
-
-        .loading {
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 300px;
-          color: #6b7280;
-        }
-
-        @media (max-width: 900px) {
-          .charts-grid {
-            grid-template-columns: 1fr;
-          }
-
-          .chart-card.full-width {
-            grid-column: 1;
-          }
-        }
-      `}</style>
     </div>
   );
 }
