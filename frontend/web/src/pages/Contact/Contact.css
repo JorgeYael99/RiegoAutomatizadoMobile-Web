@@ -1,139 +1,123 @@
 .contact-page {
-  min-height: calc(100vh - 120px);
+  min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 40px 20px;
-  background: #f5f7f6;
+  background: #f4f7f5;
+  padding: 20px;
 }
 
-.contact-container {
-  background: var(--light);
-  padding: 40px;
-  border-radius: var(--radius);
-  box-shadow: var(--shadow);
+.contact-card-wrapper {
+  display: grid;
+  grid-template-columns: 1fr 1.4fr; /* Proporción balanceada */
+  background: white;
+  border-radius: 40px;
+  overflow: hidden;
+  max-width: 1000px;
   width: 100%;
-  max-width: 500px;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.05);
 }
 
-.contact-container h2 {
-  color: var(--primary);
-  text-align: center;
-  margin-bottom: 10px;
-  font-size: 2rem;
+/* Panel Izquierdo */
+.contact-info-panel {
+  background: #387c44; /* Verde HuertoSmart */
+  color: white;
+  padding: 60px 50px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 }
 
-.contact-description {
-  text-align: center;
-  color: #666;
-  margin-bottom: 30px;
-  font-size: 0.95rem;
+.contact-info-panel h2 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+}
+
+.contact-badge {
+  background: rgba(255,255,255,0.2);
+  padding: 8px 18px;
+  border-radius: 20px;
+  width: fit-content;
+  font-size: 0.85rem;
+  margin-top: 20px;
+}
+
+/* Panel Derecho - Ajuste de Datos */
+.contact-form-panel {
+  padding: 60px;
+  background: white;
 }
 
 .contact-form {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 20px; /* Espacio uniforme entre grupos */
 }
 
 .form-group {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  align-items: flex-start; /* Alinea etiquetas a la izquierda */
 }
 
 .form-group label {
-  font-weight: 600;
-  color: var(--dark);
-  font-size: 0.9rem;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #888;
+  letter-spacing: 1px;
 }
 
-.form-group input,
-.form-group select,
+.form-group input, 
+.form-group select, 
 .form-group textarea {
-  padding: 12px 16px;
-  border: 2px solid #e0e0e0;
-  border-radius: var(--radius);
+  width: 100%;
+  padding: 14px 18px;
+  border: 1px solid #f0f0f0;
+  border-radius: 14px;
+  background: #f9f9f9;
   font-size: 1rem;
-  font-family: inherit;
-  transition: border-color 0.3s ease;
-  background: var(--light);
+  transition: all 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus,
+.form-group input:focus, 
+.form-group select:focus, 
 .form-group textarea:focus {
   outline: none;
-  border-color: var(--primary);
+  border-color: #387c44;
+  background: white;
+  box-shadow: 0 4px 15px rgba(56, 124, 68, 0.08);
 }
 
-.form-group input::placeholder,
-.form-group textarea::placeholder {
-  color: #aaa;
-}
-
-.form-group select {
-  cursor: pointer;
-  appearance: none;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23666' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
-  background-repeat: no-repeat;
-  background-position: right 16px center;
-  padding-right: 40px;
-}
-
-.form-group select option {
-  padding: 10px;
-}
-
-.form-group textarea {
-  resize: vertical;
-  min-height: 120px;
-}
-
-.btn-submit {
-  background: var(--primary);
-  color: var(--light);
-  padding: 14px 24px;
+.btn-submit-modern {
+  background: #387c44;
+  color: white;
   border: none;
-  border-radius: var(--radius);
-  font-size: 1rem;
-  font-weight: 600;
+  padding: 16px;
+  border-radius: 14px;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
   margin-top: 10px;
+  transition: transform 0.2s;
 }
 
-.btn-submit:hover:not(:disabled) {
-  background: #1b5e20;
+.btn-submit-modern:hover {
+  background: #2d6336;
   transform: translateY(-2px);
 }
 
-.btn-submit:disabled {
-  opacity: 0.7;
-  cursor: not-allowed;
-}
-
-.success-message {
-  background: var(--secondary);
-  color: var(--light);
-  padding: 12px 16px;
-  border-radius: var(--radius);
+.status-text {
+  margin-top: 15px;
+  font-size: 0.9rem;
   text-align: center;
-  font-weight: 500;
-  animation: fadeUp 0.5s ease-out;
 }
+.status-text.success { color: #387c44; }
+.status-text.error { color: #d32f2f; }
 
 /* Responsive */
-@media (max-width: 480px) {
-  .contact-container {
-    padding: 30px 20px;
-  }
-
-  .contact-container h2 {
-    font-size: 1.5rem;
-  }
-
-  .contact-description {
-    font-size: 0.9rem;
-  }
+@media (max-width: 850px) {
+  .contact-card-wrapper { grid-template-columns: 1fr; }
+  .contact-info-panel { padding: 40px; text-align: center; }
+  .contact-info-panel .contact-badge { margin: 20px auto 0; }
+  .contact-form-panel { padding: 40px 30px; }
 }
