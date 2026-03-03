@@ -88,21 +88,6 @@
   display: block;
 }
 
-/* Descripción alternativa (hpola) */
-.hpola {
-  font-size: 0.85rem;
-  color: #565959;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-.hpola.expanded {
-  -webkit-line-clamp: unset;
-  display: block;
-}
-
 /* Botón ver más */
 .see-more {
   font-size: 0.8rem;
@@ -131,7 +116,6 @@
   font-weight: 600;
   cursor: pointer;
   transition: all 0.2s ease;
-  width: 100%;
 }
 
 .card-content button:hover {
@@ -140,13 +124,6 @@
 
 .card-content button:active {
   transform: scale(0.97);
-}
-
-.card-content button.disabled-btn {
-  background: #e0e0e0;
-  border-color: #cccccc;
-  cursor: not-allowed;
-  opacity: 0.7;
 }
 
 /* Notificación */
@@ -164,7 +141,6 @@
   gap: 10px;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
-  white-space: nowrap;
 }
 
 @keyframes fadeIn {
