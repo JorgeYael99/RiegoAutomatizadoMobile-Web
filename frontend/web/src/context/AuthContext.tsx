@@ -7,18 +7,20 @@ interface UserPayload {
 const AuthContext = createContext<any>(null);
 
 export const AuthProvider = ({ children }: any) => {
-  const [token, setToken] = useState(localStorage.getItem("token"));
-  const [rol, setRol] = useState<string | null>(null);
+  const [token, setToken] = useState(() => localStorage.getItem("token"));
+  const [rol, setRol] = useState<string | null>(() => localStorage.getItem("rol") as string | null);
 
   const login = (jwt: string) => {
     const decoded = jwtDecode<UserPayload>(jwt);
     localStorage.setItem("token", jwt);
+    localStorage.setItem("rol", decoded.rol);
     setToken(jwt);
     setRol(decoded.rol);
   };
 
   const logout = () => {
-    localStorage.clear();
+    localStorage.removeItem("token");
+    localStorage.removeItem("rol");
     setToken(null);
     setRol(null);
   };
