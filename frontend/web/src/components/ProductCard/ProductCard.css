@@ -1,4 +1,37 @@
-/* Badge cantidad en carrito */
+/* Product Card - Estilos completos */
+.product-card {
+  background: white;
+  border-radius: var(--radius);
+  overflow: hidden;
+  box-shadow: var(--shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  position: relative;
+}
+
+.product-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 250px;
+  overflow: hidden;
+  background: #f5f5f5;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.product-card:hover .image-container img {
+  transform: scale(1.05);
+}
+
 .cart-count-badge {
   position: absolute;
   top: 10px;
@@ -11,9 +44,91 @@
   font-weight: bold;
   z-index: 2;
 }
-.image-container {
-  position: relative;
+
+/* Card Content */
+.card-content {
+  padding: 1.25rem;
 }
+
+.card-content h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+}
+
+.card-content .hpola {
+  font-size: 0.9rem;
+  color: #666;
+  line-height: 1.5;
+  margin-bottom: 0.5rem;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}
+
+.card-content .hpola.expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+}
+
+.see-more {
+  color: var(--primary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  font-weight: 500;
+  display: inline-block;
+  margin-bottom: 0.75rem;
+}
+
+.see-more:hover {
+  text-decoration: underline;
+}
+
+.price {
+  display: block;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 1rem;
+}
+
+.price span {
+  font-size: 0.9rem;
+  font-weight: 400;
+  color: #666;
+}
+
+/* Botón */
+.card-content button {
+  width: 100%;
+  padding: 0.875rem;
+  background: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.card-content button:hover {
+  background: #1b5e20;
+}
+
+.card-content button:active {
+  transform: scale(0.98);
+}
+
+.card-content button.disabled-btn {
+  background: #ccc;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
 /* Notificación */
 .notification {
   position: absolute;
@@ -29,11 +144,14 @@
   gap: 10px;
   z-index: 1000;
   animation: fadeIn 0.3s ease;
+  white-space: nowrap;
 }
+
 @keyframes fadeIn {
   from { opacity: 0; transform: translate(-50%, -60%); }
   to { opacity: 1; transform: translate(-50%, -50%); }
 }
+
 /* Login prompt */
 .login-prompt {
   background: #fff3cd;
@@ -43,11 +161,13 @@
   margin-top: 10px;
   text-align: center;
 }
+
 .login-prompt p {
   margin: 0 0 8px 0;
   font-size: 0.85rem;
   color: #856404;
 }
+
 .login-prompt-btn {
   background: #28a745;
   color: white;
@@ -57,7 +177,22 @@
   cursor: pointer;
   font-size: 0.85rem;
 }
-.disabled-btn {
-  opacity: 0.7;
-  cursor: not-allowed;
+
+.login-prompt-btn:hover {
+  background: #218838;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .image-container {
+    height: 200px;
+  }
+  
+  .card-content {
+    padding: 1rem;
+  }
+  
+  .price {
+    font-size: 1.25rem;
+  }
 }

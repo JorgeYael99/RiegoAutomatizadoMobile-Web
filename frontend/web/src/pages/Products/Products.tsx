@@ -33,17 +33,20 @@ export default function Products() {
   if (loading) return <p style={{ textAlign: "center" }}>Cargando productos...</p>;
 
   return (
-    <div className="products-container">
-      {products.map((product) => (
-        <ProductCard
-          key={product.id}
-          id = {product.id}
-          name={product.nombre}
-          description={product.descripcion}
-          price={product.precio}
-          image={product.imagen_url}
-        />
-      ))}
+    <div className="products-page">
+      <h2>Nuestros Productos</h2>
+      <div className="products-container">
+        {products.map((product) => (
+          <ProductCard
+            key={product.id}
+            id={product.id}
+            name={product.nombre}
+            description={product.descripcion}
+            price={product.precio}
+            image={product.imagen_url}
+          />
+        ))}
+      </div>
     </div>
   );
 }
