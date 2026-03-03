@@ -1,4 +1,5 @@
-import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { useAuth } from "../context/AuthContext";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import Home from "../pages/Home/Home";
@@ -17,8 +18,9 @@ import Messages from "../pages/Admin/Messages";
 import SalesDashboard from "../pages/Admin/SalesDashboard";
 
 function AppContent() {
-  const location = useLocation();
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const { token, rol } = useAuth();
+  
+  const isAdmin = token && rol === "admin";
 
   return (
     <>
@@ -53,7 +55,7 @@ function AppContent() {
         </Route>
       </Routes>
 
-      {!isAdminRoute && <Footer />}
+      {!isAdmin && <Footer />}
     </>
   );
 }

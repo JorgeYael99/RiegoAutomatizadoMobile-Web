@@ -1,4 +1,4 @@
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
@@ -7,7 +7,6 @@ import "./Navbar.css";
 export default function Navbar() {
   const { token, rol, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
-  const location = useLocation();
   const navigate = useNavigate();
 
   const isAuthenticated =
@@ -17,34 +16,32 @@ export default function Navbar() {
     token !== "null" &&
     token !== "undefined";
 
-  const isAdminRoute = location.pathname.startsWith("/admin");
+  const isAdmin = isAuthenticated && rol === "admin";
 
   const handleLogout = () => {
     logout();
     navigate("/");
   };
 
-  if (isAdminRoute) {
+  // Si es admin, mostrar navbar minimalista
+  if (isAdmin) {
     return (
       <nav className="navbar admin-navbar">
         <Link to="/" className="logo">🌱 HuertoSmart</Link>
         
         <div className="admin-nav-links">
-          {isAuthenticated && rol === "admin" && (
-            <>
-              <Link to="/admin" className="btn-admin">
-                Admin
-              </Link>
-              <button onClick={handleLogout} className="btn-logout">
-                Cerrar sesión
-              </button>
-            </>
-          )}
+          <Link to="/admin" className="btn-admin">
+            Admin
+          </Link>
+          <button onClick={handleLogout} className="btn-logout">
+            Cerrar sesión
+          </button>
         </div>
       </nav>
     );
   }
 
+  // Navbar normal para clientes o no autenticados
   return (
     <nav className="navbar">
       <h2 className="logo">🌱 HuertoSmart</h2>
