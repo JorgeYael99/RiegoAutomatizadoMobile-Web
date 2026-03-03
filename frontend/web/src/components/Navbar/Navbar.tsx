@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
@@ -7,6 +7,8 @@ import "./Navbar.css";
 export default function Navbar() {
   const { token, rol, logout } = useAuth();
   const [menuOpen, setMenuOpen] = useState(false);
+  const location = useLocation();
+  const navigate = useNavigate();
 
   const isAuthenticated =
     token &&
@@ -14,6 +16,34 @@ export default function Navbar() {
     token.length > 0 &&
     token !== "null" &&
     token !== "undefined";
+
+  const isAdminRoute = location.pathname.startsWith("/admin");
+
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  if (isAdminRoute) {
+    return (
+      <nav className="navbar admin-navbar">
+        <Link to="/" className="logo">🌱 HuertoSmart</Link>
+        
+        <div className="admin-nav-links">
+          {isAuthenticated && rol === "admin" && (
+            <>
+              <Link to="/admin" className="btn-admin">
+                Admin
+              </Link>
+              <button onClick={handleLogout} className="btn-logout">
+                Cerrar sesión
+              </button>
+            </>
+          )}
+        </div>
+      </nav>
+    );
+  }
 
   return (
     <nav className="navbar">
@@ -58,6 +88,7 @@ export default function Navbar() {
             onClick={() => {
               logout();
               setMenuOpen(false);
+              navigate("/");
             }}
             className="btn-logout"
           >

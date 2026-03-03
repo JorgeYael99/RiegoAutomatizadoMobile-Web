@@ -157,3 +157,49 @@
     text-align: center;
   }
 }
+
+/* Admin Navbar - Minimalista */
+.admin-navbar {
+  background: #111827;
+  height: 60px;
+}
+
+.admin-navbar .logo {
+  color: white;
+  font-size: 1.3rem;
+}
+
+.admin-nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin-nav-links .btn-admin {
+  background: #2e7d32;
+  color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-nav-links .btn-admin:hover {
+  background: #1b5e20;
+}
+
+.admin-nav-links .btn-logout {
+  background: transparent;
+  border: 1px solid #ef4444;
+  color: #ef4444;
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+.admin-nav-links .btn-logout:hover {
+  background: #ef4444;
+  color: white;
+}

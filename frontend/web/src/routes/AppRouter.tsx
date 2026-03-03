@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, useLocation } from "react-router-dom";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
 import Home from "../pages/Home/Home";
@@ -16,11 +16,14 @@ import UsersManagement from "../pages/Admin/UsersManagement";
 import Messages from "../pages/Admin/Messages";
 import SalesDashboard from "../pages/Admin/SalesDashboard";
 
-export default function AppRouter() {
-  return (
-    <BrowserRouter>
-      <Navbar />
+function AppContent() {
+  const location = useLocation();
+  const isAdminRoute = location.pathname.startsWith("/admin");
 
+  return (
+    <>
+      {!isAdminRoute && <Navbar />}
+      
       <Routes>
         {/* Públicas */}
         <Route path="/" element={<Home />} />
@@ -50,7 +53,15 @@ export default function AppRouter() {
         </Route>
       </Routes>
 
-      <Footer />
+      {!isAdminRoute && <Footer />}
+    </>
+  );
+}
+
+export default function AppRouter() {
+  return (
+    <BrowserRouter>
+      <AppContent />
     </BrowserRouter>
   );
 }
