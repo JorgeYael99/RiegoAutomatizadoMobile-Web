@@ -3,6 +3,7 @@ import { useCart } from "../../context/CartContext";
 import { useAuth } from "../../context/AuthContext";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 interface Props {
   id: number;
   name: string;
@@ -10,6 +11,7 @@ interface Props {
   image?: string;
   description: string;
 }
+
 export default function ProductCard({
   id,
   name,
@@ -24,6 +26,7 @@ export default function ProductCard({
   const [showNotification, setShowNotification] = useState(false);
   const [showLoginPrompt, setShowLoginPrompt] = useState(false);
   const itemCount = cart.filter(item => item.id === id).length;
+
   const handleAddToCart = () => {
     if (!token) {
       setShowLoginPrompt(true);
@@ -44,11 +47,13 @@ export default function ProductCard({
       setShowNotification(false);
     }, 2000);
   };
+
   const handleLoginRedirect = () => {
     navigate('/login', { 
       state: { from: '/products', message: 'Inicia sesión para agregar productos al carrito' }
     });
   };
+
   return (
     <div className="product-card amazon">
       <div className="image-container">
@@ -73,7 +78,7 @@ export default function ProductCard({
         <span className="price">${price} MXN</span>
         <button 
           onClick={handleAddToCart}
-          className={!token ? "disabled-btn" : ""}
+          className={`${!token ? "disabled-btn" : ""} ${showNotification ? "added-to-cart" : ""}`}
         >
           {token ? "Agregar al carrito" : "Inicia sesión para comprar"}
         </button>
