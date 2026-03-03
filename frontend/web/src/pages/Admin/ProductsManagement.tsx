@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiPlus, FiEdit2, FiTrash2, FiSearch, FiX } from "react-icons/fi";
 import "./ProductsManagement.css";
+import PageHeader from "./components/PageHeader";
 
 interface Product {
   id: number;
@@ -141,12 +142,14 @@ export default function ProductsManagement() {
 
   return (
     <div className="products-page">
-      <div className="page-header">
-        <h1>Productos</h1>
-        <button className="btn btn-primary" onClick={() => setShowModal(true)}>
-          <FiPlus /> Nuevo Producto
-        </button>
-      </div>
+      <PageHeader
+        title="Productos"
+        actions={
+          <button className="btn btn-primary" onClick={() => setShowModal(true)}>
+            <FiPlus /> Nuevo Producto
+          </button>
+        }
+      />
 
       <div className="search-box">
         <FiSearch />
@@ -211,6 +214,43 @@ export default function ProductsManagement() {
             )}
           </tbody>
         </table>
+      </div>
+
+      {/* Mobile Cards Layout */}
+      <div className="products-cards">
+        {filteredProducts.map((product) => (
+          <div key={product.id} className="product-card-mobile">
+            <img
+              src={product.imagen_url || "https://via.placeholder.com/100"}
+              alt={product.nombre}
+              className="card-image"
+            />
+            <div className="card-content">
+              <h3 className="card-title">{product.nombre}</h3>
+              <p className="card-description">{product.descripcion?.substring(0, 80)}...</p>
+              <div className="card-details">
+                <span className="card-price">${parsePrice(product.precio).toFixed(2)}</span>
+                <span className="card-stock">Stock: {product.stock}</span>
+                <span className={`badge ${product.stock > 0 ? "badge-success" : "badge-danger"}`}>
+                  {product.stock > 0 ? "Activo" : "Agotado"}
+                </span>
+              </div>
+              <div className="card-actions">
+                <button className="btn btn-sm btn-secondary" onClick={() => openEditModal(product)}>
+                  <FiEdit2 /> Editar
+                </button>
+                <button className="btn btn-sm btn-danger" onClick={() => handleDelete(product.id)}>
+                  <FiTrash2 /> Eliminar
+                </button>
+              </div>
+            </div>
+          </div>
+        ))}
+        {filteredProducts.length === 0 && (
+          <div className="empty-state">
+            <p>No se encontraron productos</p>
+          </div>
+        )}
       </div>
 
       {/* Create Modal */}

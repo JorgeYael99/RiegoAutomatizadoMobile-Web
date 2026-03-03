@@ -100,7 +100,7 @@
 .admin-main {
   flex: 1;
   margin-left: 260px;
-  padding: 2rem;
+  padding: 60px 2rem 2rem 2rem;
   min-height: 100vh;
 }
 
@@ -230,11 +230,21 @@
 /* Common Components */
 .page-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
   margin-bottom: 2rem;
-  flex-wrap: wrap;
-  gap: 1rem;
+}
+
+.header-content {
+  display: flex;
+  flex-direction: column;
+}
+
+.header-actions {
+  min-width: 180px;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
 }
 
 .page-header h1 {

@@ -10,6 +10,7 @@ import {
   markMessageAsUnread,
   deleteMessage,
 } from "../../api/contact";
+import PageHeader from "./components/PageHeader";
 
 interface ContactMessage {
   id: number;
@@ -107,17 +108,21 @@ export default function Messages() {
 
   return (
     <div className="messages-page">
-      <div className="page-header">
-        <h1>
-          Mensajes de Contacto
-          {unreadCount > 0 && (
-            <span className="unread-badge">{unreadCount} nuevos</span>
-          )}
-        </h1>
-        <button className="btn btn-secondary" onClick={fetchMessages}>
-          <FiRefreshCw /> Actualizar
-        </button>
-      </div>
+      <PageHeader
+        title={
+          <>
+            Mensajes de Contacto
+            {unreadCount > 0 && (
+              <span className="unread-badge">{unreadCount} nuevos</span>
+            )}
+          </>
+        }
+        actions={
+          <button className="btn btn-secondary" onClick={fetchMessages}>
+            <FiRefreshCw /> Actualizar
+          </button>
+        }
+      />
 
       <div className="filters">
         <div className="filter-tabs">
@@ -192,8 +197,8 @@ export default function Messages() {
           {selectedMessage ? (
             <>
               <div className="detail-header">
-                <div>
-                  <h2>{selectedMessage.nombre}</h2>
+                <div className="header-info">
+                  <h2 className="detail-name">{selectedMessage.nombre}</h2>
                   <p className="detail-email">{selectedMessage.email}</p>
                 </div>
                 <div className="detail-actions">

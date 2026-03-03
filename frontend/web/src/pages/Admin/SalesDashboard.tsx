@@ -20,6 +20,7 @@ import {
   LineChart,
   Line,
 } from "recharts";
+import PageHeader from "./components/PageHeader";
 
 interface Stats {
   total_ingresos: number;
@@ -131,12 +132,14 @@ export default function SalesDashboard() {
 
   return (
     <div className="sales-page">
-      <div className="page-header">
-        <h1>Ventas y Estadísticas</h1>
-        <button className="btn btn-primary" onClick={handleExport}>
-          <FiDownload /> Exportar CSV
-        </button>
-      </div>
+      <PageHeader
+        title="Ventas y Estadísticas"
+        actions={
+          <button className="btn btn-primary" onClick={handleExport}>
+            <FiDownload /> Exportar CSV
+          </button>
+        }
+      />
 
       <div className="stats-grid">
         <div className="stat-card">

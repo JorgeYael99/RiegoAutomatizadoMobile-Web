@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { FiPackage, FiDollarSign, FiShoppingCart, FiUsers, FiMessageSquare } from "react-icons/fi";
 import "./Dashboard.css";
+import PageHeader from "./components/PageHeader";
 
 interface Product {
   id: number;
@@ -93,9 +94,7 @@ export default function Dashboard() {
 
   return (
     <div className="dashboard">
-      <div className="page-header">
-        <h1>Dashboard</h1>
-      </div>
+      <PageHeader title="Dashboard" />
 
       <div className="stats-grid">
         <div className="stat-card">

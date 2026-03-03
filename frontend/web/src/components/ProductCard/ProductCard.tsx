@@ -13,7 +13,7 @@ interface Props {
 }
 
 export default function ProductCard({ id, name, price, image, description }: Props) {
-  const { addToCart, cartItems } = useCart();
+  const { addToCart, cart } = useCart();
   const { token } = useAuth();
   const navigate = useNavigate();
   const [showNotification, setShowNotification] = useState(false);
@@ -21,11 +21,11 @@ export default function ProductCard({ id, name, price, image, description }: Pro
   const [itemCount, setItemCount] = useState(0);
 
   useEffect(() => {
-    if (cartItems && Array.isArray(cartItems)) {
-      const count = cartItems.filter(item => item.id === id).length;
+    if (cart && Array.isArray(cart)) {
+      const count = cart.filter(item => item.id === id).length;
       setItemCount(count);
     }
-  }, [cartItems, id]);
+  }, [cart, id]);
 
   const handleAddToCart = () => {
     if (!token) {

@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { FiSearch, FiEdit2, FiTrash2, FiX, FiShield } from "react-icons/fi";
 import "./UsersManagement.css";
 import { updateUser, updateUserRole, deleteUser } from "../../api/users";
+import PageHeader from "./components/PageHeader";
 
 interface User {
   id: number;
@@ -105,9 +106,7 @@ export default function UsersManagement() {
 
   return (
     <div className="users-page">
-      <div className="page-header">
-        <h1>Usuarios</h1>
-      </div>
+      <PageHeader title="Usuarios" />
 
       <div className="search-box">
         <FiSearch />
