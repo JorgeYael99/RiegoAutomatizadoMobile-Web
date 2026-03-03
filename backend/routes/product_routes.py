@@ -119,3 +119,53 @@ def delete_product(id):
     except Exception as e:
         print(" ERROR DELETE:", e)
         return jsonify({"error": "Error eliminando producto"}), 500
+
+
+# 🔹 Editar producto
+@product_bp.route("/<int:id>", methods=["PUT"])
+@jwt_required()
+def update_product(id):
+    try:
+        claims = get_jwt()
+
+        if claims.get("rol") != "admin":
+            return jsonify({"message": "No autorizado"}), 403
+
+        data = request.get_json(silent=True)
+
+        if not data:
+            return jsonify({"error": "JSON inválido o vacío"}), 400
+
+        name = data.get("name", "").strip()
+        description = data.get("description", "").strip()
+        price = data.get("price")
+        stock = data.get("stock")
+        image = data.get("image", "").strip()
+
+        if not name:
+            return jsonify({"error": "El nombre no puede estar vacío"}), 400
+
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        query = """
+            UPDATE products 
+            SET nombre = %s, descripcion = %s, precio = %s, stock = %s, imagen_url = %s
+            WHERE id = %s
+        """
+
+        cursor.execute(query, (name, description, price, stock, image, id))
+        conn.commit()
+
+        affected = cursor.rowcount
+        cursor.close()
+        conn.close()
+
+        if affected == 0:
+            return jsonify({"error": "Producto no encontrado"}), 404
+
+        return jsonify({"message": "Producto actualizado correctamente"}), 200
+
+    except Exception as e:
+        print(" ERROR UPDATE:", e)
+        return jsonify({"error": "Error actualizando producto"}), 500

@@ -8,8 +8,13 @@ import Cart from "../pages/Cart/Cart";
 import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
-import AdminDashboard from "../pages/Admin/AdminDashboard";
 import AdminRoute from "./AdminRoute";
+import AdminLayout from "../pages/Admin/AdminLayout";
+import Dashboard from "../pages/Admin/Dashboard";
+import ProductsManagement from "../pages/Admin/ProductsManagement";
+import UsersManagement from "../pages/Admin/UsersManagement";
+import Messages from "../pages/Admin/Messages";
+import SalesDashboard from "../pages/Admin/SalesDashboard";
 
 export default function AppRouter() {
   return (
@@ -33,10 +38,16 @@ export default function AppRouter() {
           path="/admin"
           element={
             <AdminRoute>
-              { <AdminDashboard /> }
+              <AdminLayout />
             </AdminRoute>
           }
-        />
+        >
+          <Route index element={<Dashboard />} />
+          <Route path="products" element={<ProductsManagement />} />
+          <Route path="users" element={<UsersManagement />} />
+          <Route path="messages" element={<Messages />} />
+          <Route path="sales" element={<SalesDashboard />} />
+        </Route>
       </Routes>
 
       <Footer />

@@ -4,6 +4,8 @@ from flask_cors import CORS
 from routes.auth_routes import auth
 from routes.product_routes import product_bp
 from routes.contact_routes import contact_bp
+from routes.user_routes import user_bp
+from routes.order_routes import order_bp
 import config
 from database import get_db_connection
 from config import GOOGLE_MAPS_API_KEY
@@ -63,6 +65,8 @@ CORS(app, resources={
 app.register_blueprint(auth, url_prefix="/api/auth")
 app.register_blueprint(product_bp, url_prefix="/api/products")
 app.register_blueprint(contact_bp, url_prefix="/api/contact")
+app.register_blueprint(user_bp, url_prefix="/api/users")
+app.register_blueprint(order_bp, url_prefix="/api/orders")
 
 from models.contact_model import ContactMessage
 

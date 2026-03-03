@@ -31,6 +31,80 @@ class User:
         conn.close()
 
         return user
+    
+    @staticmethod
+    def get_by_id(user_id):
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT id, nombre, email, rol, created_at FROM users WHERE id = %s", (user_id,))
+        user = cursor.fetchone()
+
+        cursor.close()
+        conn.close()
+
+        return user
+    
+    @staticmethod
+    def get_all():
+        conn = get_db_connection()
+        cursor = conn.cursor(dictionary=True)
+
+        cursor.execute("SELECT id, nombre, email, rol, created_at FROM users ORDER BY created_at DESC")
+        users = cursor.fetchall()
+
+        cursor.close()
+        conn.close()
+
+        return users
+    
+    @staticmethod
+    def update(user_id, nombre, email):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "UPDATE users SET nombre = %s, email = %s WHERE id = %s",
+            (nombre, email, user_id)
+        )
+
+        conn.commit()
+        affected = cursor.rowcount
+        cursor.close()
+        conn.close()
+
+        return affected > 0
+    
+    @staticmethod
+    def update_rol(user_id, rol):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute(
+            "UPDATE users SET rol = %s WHERE id = %s",
+            (rol, user_id)
+        )
+
+        conn.commit()
+        affected = cursor.rowcount
+        cursor.close()
+        conn.close()
+
+        return affected > 0
+    
+    @staticmethod
+    def delete(user_id):
+        conn = get_db_connection()
+        cursor = conn.cursor()
+
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+
+        conn.commit()
+        affected = cursor.rowcount
+        cursor.close()
+        conn.close()
+
+        return affected > 0
 
     @staticmethod
     def verify_password(password, password_hash):
