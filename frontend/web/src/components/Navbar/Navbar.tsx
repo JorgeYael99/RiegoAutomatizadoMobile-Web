@@ -1,60 +1,94 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext"; // 👈 Importamos el hook del carrito
-import { FiShoppingCart } from "react-icons/fi";
+import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
+import { useState } from "react";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { token, rol, logout } = useAuth();
-  const { cart } = useCart(); // 👈 Obtenemos el carrito
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
 
-  // Verificación estricta del token
-  const isAuthenticated = token && typeof token === 'string' && token.length > 0 && token !== "null" && token !== "undefined";
+  const isAuthenticated =
+    token &&
+    typeof token === "string" &&
+    token.length > 0 &&
+    token !== "null" &&
+    token !== "undefined";
 
-  // Calcular el total de items sumando las cantidades
-  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const isAdmin = isAuthenticated && rol === "admin";
 
+  const handleLogout = () => {
+    logout();
+    navigate("/");
+  };
+
+  // Si es admin, mostrar navbar minimalista
+  if (isAdmin) {
+    return (
+      <nav className="navbar admin-navbar">
+        <Link to="/" className="logo">🌱 HuertoSmart</Link>
+        
+        <div className="admin-nav-links">
+          <Link to="/admin" className="btn-admin">
+            Admin
+          </Link>
+          <button onClick={handleLogout} className="btn-logout">
+            Cerrar sesión
+          </button>
+        </div>
+      </nav>
+    );
+  }
+
+  // Navbar normal para clientes o no autenticados
   return (
     <nav className="navbar">
       <h2 className="logo">🌱 HuertoSmart</h2>
 
-      <div className="nav-links">
-        <Link to="/">Inicio</Link>
-        <Link to="/products">Productos</Link>
-        <Link to="/about">Nosotros</Link>
+      {/* Botón hamburguesa */}
+      <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
+        {menuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
+      </div>
 
-        {/* Carrito: visible solo si está autenticado */}
+      <div className={`nav-links ${menuOpen ? "active" : ""}`}>
+        <Link to="/" onClick={() => setMenuOpen(false)}>Inicio</Link>
+        <Link to="/products" onClick={() => setMenuOpen(false)}>Productos</Link>
+        <Link to="/about" onClick={() => setMenuOpen(false)}>Nosotros</Link>
+        <Link to="/Contact" onClick={() => setMenuOpen(false)}>Contacto</Link>
+
         {isAuthenticated && (
-          <Link to="/cart" className="cart-link">
+          <Link to="/cart" className="cart-link" onClick={() => setMenuOpen(false)}>
             <FiShoppingCart className="cart-icon" />
-            {cartItemCount > 0 && (
-              <span className="cart-badge">{cartItemCount}</span>
-            )}
           </Link>
         )}
 
-        {/* Login/Register si no autenticado */}
         {!isAuthenticated && (
           <>
-            <Link to="/login" className="btn-login">
+            <Link to="/login" className="btn-login" onClick={() => setMenuOpen(false)}>
               Iniciar sesión
             </Link>
-            <Link to="/register" className="btn-register">
+            <Link to="/register" className="btn-register" onClick={() => setMenuOpen(false)}>
               Registrarse
             </Link>
           </>
         )}
 
-        {/* Admin si es admin */}
         {isAuthenticated && rol === "admin" && (
-          <Link to="/admin" className="btn-admin">
+          <Link to="/admin" className="btn-admin" onClick={() => setMenuOpen(false)}>
             Admin
           </Link>
         )}
 
-        {/* Cerrar sesión */}
         {isAuthenticated && (
-          <button onClick={logout} className="btn-logout">
+          <button
+            onClick={() => {
+              logout();
+              setMenuOpen(false);
+              navigate("/");
+            }}
+            className="btn-logout"
+          >
             Cerrar sesión
           </button>
         )}
