@@ -47,9 +47,12 @@
   color: var(--primary);
 }
 
-/* Botones de acción */
-.btn-logout {
-  background: white; 
+/* ============================= */
+/* BOTONES DE AUTENTICACIÓN (iguales a Cerrar sesión) */
+/* ============================= */
+.btn-login,
+.btn-register {
+  background: white;
   color: #077d19;
   border: 3px solid #bcff03;
   padding: 8px 18px;
@@ -57,9 +60,22 @@
   font-weight: 700;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  text-decoration: none;
+  display: inline-block;
 }
 
-.btn-login, .btn-register, .btn-admin {
+.btn-login:hover,
+.btn-register:hover {
+  background: #c1ebc2a4;
+  color: white;
+  border-color: #c1ebc2a4;
+  transform: translateY(-2px);
+}
+
+/* ============================= */
+/* BOTÓN ADMIN (estilo original) */
+/* ============================= */
+.btn-admin {
   background: var(--primary);
   color: white;
   padding: 10px 20px;
@@ -69,10 +85,28 @@
   transition: 0.3s;
 }
 
+.btn-admin:hover {
+  background: var(--primary-dark);
+}
+
+/* ============================= */
+/* BOTÓN CERRAR SESIÓN (sin cambios) */
+/* ============================= */
+.btn-logout {
+  background: white;
+  color: #077d19;
+  border: 3px solid #bcff03;
+  padding: 8px 18px;
+  border-radius: 12px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
 .btn-logout:hover {
-  background: #ff4757;
+  background: #c1ebc2a4;
   color: white;
-  border-color: #ff4757;
+  border-color: #c1ebc2a4;
   transform: translateY(-2px);
 }
 

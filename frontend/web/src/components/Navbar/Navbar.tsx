@@ -1,11 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
+import { useCart } from "../../context/CartContext"; // <-- NUEVO
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 import "./Navbar.css";
 
 export default function Navbar() {
   const { token, rol, logout } = useAuth();
+  const { cart } = useCart(); // <-- NUEVO: obtener carrito
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -22,6 +24,9 @@ export default function Navbar() {
     logout();
     navigate("/");
   };
+
+  // Calcular total de items (suma de cantidades) // <-- NUEVO
+  const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
   // Si es admin, mostrar navbar minimalista
   if (isAdmin) {
@@ -60,6 +65,9 @@ export default function Navbar() {
         {isAuthenticated && (
           <Link to="/cart" className="cart-link" onClick={() => setMenuOpen(false)}>
             <FiShoppingCart className="cart-icon" />
+            {cartItemCount > 0 && ( // <-- NUEVO: mostrar badge solo si hay items
+              <span className="cart-badge">{cartItemCount}</span>
+            )}
           </Link>
         )}
 
