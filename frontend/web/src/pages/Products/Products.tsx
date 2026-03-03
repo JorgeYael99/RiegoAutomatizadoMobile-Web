@@ -35,7 +35,7 @@ export default function Products() {
   return (
     <div className="products-page">
       <h2>Nuestros Productos</h2>
-      <div className="products-container">
+      <div className="products-grid">
         {products.map((product) => (
           <ProductCard
             key={product.id}

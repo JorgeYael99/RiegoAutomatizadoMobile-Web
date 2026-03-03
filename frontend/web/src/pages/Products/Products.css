@@ -9,7 +9,7 @@
   font-size: 2.5rem;
 }
 
-.products-container {
+.products-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 40px;
@@ -21,7 +21,7 @@
     padding: 40px 5%;
   }
   
-  .products-container {
+  .products-grid {
     gap: 30px;
   }
 }
@@ -31,7 +31,7 @@
     font-size: 2rem;
   }
   
-  .products-container {
+  .products-grid {
     grid-template-columns: 1fr;
   }
 }
