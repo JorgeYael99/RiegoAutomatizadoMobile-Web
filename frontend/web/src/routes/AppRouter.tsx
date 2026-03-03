@@ -22,7 +22,7 @@ function AppContent() {
 
   return (
     <>
-      {!isAdminRoute && <Navbar />}
+      <Navbar />
       
       <Routes>
         {/* Públicas */}
