@@ -5,12 +5,17 @@ interface Product {
   id: number;
   nombre: string;
   descripcion: string;
-  precio: number;
+  precio: number | string;
   stock: number;
   imagen_url: string;
 }
 
 const API_PRODUCTS = "https://riego-automatizado-mobile-web.vercel.app/api/products";
+
+const parsePrice = (price: number | string | undefined): number => {
+  if (price === undefined || price === null) return 0;
+  return typeof price === 'number' ? price : parseFloat(price) || 0;
+};
 
 export default function ProductsManagement() {
   const [products, setProducts] = useState<Product[]>([]);
@@ -177,7 +182,7 @@ export default function ProductsManagement() {
                   <div className="product-name">{product.nombre}</div>
                   <div className="product-desc">{product.descripcion?.substring(0, 50)}...</div>
                 </td>
-                <td>${product.precio.toFixed(2)}</td>
+                <td>${parsePrice(product.precio).toFixed(2)}</td>
                 <td>{product.stock}</td>
                 <td>
                   <span className={`badge ${product.stock > 0 ? "badge-success" : "badge-danger"}`}>

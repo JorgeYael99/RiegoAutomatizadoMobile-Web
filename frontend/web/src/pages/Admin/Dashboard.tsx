@@ -4,7 +4,7 @@ import { FiPackage, FiDollarSign, FiShoppingCart, FiUsers, FiMessageSquare } fro
 interface Product {
   id: number;
   nombre: string;
-  precio: number;
+  precio: number | string;
   stock: number;
   imagen_url: string;
 }
@@ -26,12 +26,18 @@ const API_USERS = "https://riego-automatizado-mobile-web.vercel.app/api/users";
 const API_ORDERS = "https://riego-automatizado-mobile-web.vercel.app/api/orders";
 const API_CONTACT = "https://riego-automatizado-mobile-web.vercel.app/api/contact";
 
+const parsePrice = (price: number | string | undefined): number => {
+  if (price === undefined || price === null) return 0;
+  return typeof price === 'number' ? price : parseFloat(price) || 0;
+};
+
 export default function Dashboard() {
   const [products, setProducts] = useState<Product[]>([]);
   const [users, setUsers] = useState<User[]>([]);
   const [orders, setOrders] = useState<Order[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   const token = localStorage.getItem("token");
 
@@ -40,18 +46,19 @@ export default function Dashboard() {
       const headers = { Authorization: `Bearer ${token}` };
       
       const [productsRes, usersRes, ordersRes, messagesRes] = await Promise.all([
-        fetch(API_PRODUCTS).then(r => r.json()),
-        fetch(API_USERS, { headers }).then(r => r.json()),
-        fetch(API_ORDERS, { headers }).then(r => r.json()),
-        fetch(API_CONTACT, { headers }).then(r => r.json())
+        fetch(API_PRODUCTS).then(r => r.json()).catch(() => []),
+        fetch(API_USERS, { headers }).then(r => r.json()).catch(() => []),
+        fetch(API_ORDERS, { headers }).then(r => r.json()).catch(() => []),
+        fetch(API_CONTACT, { headers }).then(r => r.json()).catch(() => [])
       ]);
 
-      setProducts(productsRes);
+      setProducts(Array.isArray(productsRes) ? productsRes : []);
       setUsers(Array.isArray(usersRes) ? usersRes : []);
       setOrders(Array.isArray(ordersRes) ? ordersRes : []);
       setMessages(Array.isArray(messagesRes) ? messagesRes : []);
-    } catch (error) {
-      console.error("Error fetching data:", error);
+    } catch (err) {
+      console.error("Error fetching data:", err);
+      setError("Error al cargar los datos");
     } finally {
       setLoading(false);
     }
@@ -61,8 +68,8 @@ export default function Dashboard() {
     fetchData();
   }, []);
 
-  const totalStock = products.reduce((acc, p) => acc + p.stock, 0);
-  const inventoryValue = products.reduce((acc, p) => acc + (p.precio * p.stock), 0);
+  const totalStock = products.reduce((acc, p) => acc + (parsePrice(p.stock) || 0), 0);
+  const inventoryValue = products.reduce((acc, p) => acc + (parsePrice(p.precio) * parsePrice(p.stock)), 0);
   const totalOrders = orders.length;
 
   if (loading) {
@@ -70,6 +77,15 @@ export default function Dashboard() {
       <div className="loading-container">
         <div className="loading-spinner" />
         <p>Cargando dashboard...</p>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="error-container">
+        <p>{error}</p>
+        <button onClick={fetchData}>Reintentar</button>
       </div>
     );
   }
@@ -130,7 +146,7 @@ export default function Dashboard() {
                 />
                 <div className="product-info">
                   <span className="product-name">{product.nombre}</span>
-                  <span className="product-price">${product.precio.toFixed(2)}</span>
+                  <span className="product-price">${parsePrice(product.precio).toFixed(2)}</span>
                 </div>
                 <span className={`badge ${product.stock > 0 ? "badge-success" : "badge-danger"}`}>
                   {product.stock > 0 ? `${product.stock} uds` : "Agotado"}
@@ -187,6 +203,25 @@ export default function Dashboard() {
           justify-content: center;
           min-height: 400px;
           color: #6b7280;
+        }
+
+        .error-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          min-height: 400px;
+          color: #dc2626;
+          gap: 1rem;
+        }
+
+        .error-container button {
+          padding: 0.5rem 1rem;
+          background: #2e7d32;
+          color: white;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
         }
 
         .loading-spinner {
