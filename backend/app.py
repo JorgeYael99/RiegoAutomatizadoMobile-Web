@@ -7,6 +7,7 @@ from routes.contact_routes import contact_bp
 from routes.user_routes import user_bp
 from routes.order_routes import order_bp
 import config
+from routes.chatbot_routes import chatbot_bp
 from database import get_db_connection
 from config import GOOGLE_MAPS_API_KEY
 
@@ -67,6 +68,8 @@ app.register_blueprint(product_bp, url_prefix="/api/products")
 app.register_blueprint(contact_bp, url_prefix="/api/contact")
 app.register_blueprint(user_bp, url_prefix="/api/users")
 app.register_blueprint(order_bp, url_prefix="/api/orders")
+app.register_blueprint(chatbot_bp, url_prefix="/api/chatbot")
+
 
 from models.contact_model import ContactMessage
 
