@@ -1,6 +1,7 @@
 # Entornos virtuales
 venv/
 env/
+ven/
 
 # Archivos de caché
 __pycache__/
