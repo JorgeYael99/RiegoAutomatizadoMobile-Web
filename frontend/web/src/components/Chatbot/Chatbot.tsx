@@ -27,7 +27,7 @@ const Chatbot: React.FC = () => {
 
     try {
       // 🔥 LLAMADA A TU BACKEND FLASK
-      const response = await fetch('http://localhost:5000/api/chatbot/chat', {
+      const response = await fetch('https://riego-automatizado-mobile-web.vercel.app/api/chatbot/chat', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ message: messageToSend })
@@ -66,8 +66,14 @@ const Chatbot: React.FC = () => {
       {isOpen ? (
         <div className="chatbot-window">
           <div className="chatbot-header">
-            <h3>Asistente Virtual</h3>
-            <button onClick={() => setIsOpen(false)}>×</button>
+            <div className="chatbot-header-content">
+              <div className="chatbot-avatar">🌱</div>
+              <div>
+                <h3>HuertoSmart</h3>
+                <div className="chatbot-header-status">En línea</div>
+              </div>
+            </div>
+            <button className="chatbot-close-btn" onClick={() => setIsOpen(false)}>×</button>
           </div>
           
           <div className="chatbot-messages">
@@ -78,7 +84,9 @@ const Chatbot: React.FC = () => {
             ))}
             {isLoading && (
               <div className="message bot loading">
-                Escribiendo...
+                <span className="dot"></span>
+                <span className="dot"></span>
+                <span className="dot"></span>
               </div>
             )}
           </div>
@@ -92,14 +100,14 @@ const Chatbot: React.FC = () => {
               placeholder="Escribe tu mensaje..."
               disabled={isLoading}
             />
-            <button onClick={handleSend} disabled={isLoading}>
-              {isLoading ? '...' : 'Enviar'}
+            <button onClick={handleSend} disabled={isLoading || !inputText.trim()}>
+              ➤
             </button>
           </div>
         </div>
       ) : (
         <button className="chatbot-toggle" onClick={() => setIsOpen(true)}>
-          💬 Chat
+          💬
         </button>
       )}
     </div>

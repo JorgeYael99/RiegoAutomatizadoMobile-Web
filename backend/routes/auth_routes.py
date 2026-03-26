@@ -27,7 +27,8 @@ def login():
 
     token = create_access_token(
         identity=str(user["id"]),
-        additional_claims={"rol": user["rol"]}
+        additional_claims={"rol": user["rol"], "nombre": user["nombre"]}
     )
 
-    return jsonify(token=token)
+    user_nombre = user.get("nombre") or "Usuario"
+    return jsonify(token=token, nombre=user_nombre)

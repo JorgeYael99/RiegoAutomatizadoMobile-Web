@@ -1,13 +1,13 @@
 import { Link, useNavigate } from "react-router-dom";
 import { useAuth } from "../../context/AuthContext";
-import { useCart } from "../../context/CartContext"; // <-- NUEVO
+import { useCart } from "../../context/CartContext";
 import { FiShoppingCart, FiMenu, FiX } from "react-icons/fi";
 import { useState } from "react";
 import "./Navbar.css";
 
 export default function Navbar() {
-  const { token, rol, logout } = useAuth();
-  const { cart } = useCart(); // <-- NUEVO: obtener carrito
+  const { token, rol, nombre, logout } = useAuth();
+  const { cart } = useCart();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -25,16 +25,15 @@ export default function Navbar() {
     navigate("/");
   };
 
-  // Calcular total de items (suma de cantidades) // <-- NUEVO
   const cartItemCount = cart.reduce((total, item) => total + item.quantity, 0);
 
-  // Si es admin, mostrar navbar minimalista
   if (isAdmin) {
     return (
       <nav className="navbar admin-navbar">
         <Link to="/" className="logo">🌱 HuertoSmart</Link>
         
         <div className="admin-nav-links">
+          {nombre && <span className="user-name admin-name">👤 {nombre}</span>}
           <Link to="/admin" className="btn-admin">
             Admin
           </Link>
@@ -46,12 +45,10 @@ export default function Navbar() {
     );
   }
 
-  // Navbar normal para clientes o no autenticados
   return (
     <nav className="navbar">
       <h2 className="logo">🌱 HuertoSmart</h2>
 
-      {/* Botón hamburguesa */}
       <div className="menu-toggle" onClick={() => setMenuOpen(!menuOpen)}>
         {menuOpen ? <FiX size={28} /> : <FiMenu size={28} />}
       </div>
@@ -65,10 +62,14 @@ export default function Navbar() {
         {isAuthenticated && (
           <Link to="/cart" className="cart-link" onClick={() => setMenuOpen(false)}>
             <FiShoppingCart className="cart-icon" />
-            {cartItemCount > 0 && ( // <-- NUEVO: mostrar badge solo si hay items
+            {cartItemCount > 0 && (
               <span className="cart-badge">{cartItemCount}</span>
             )}
           </Link>
+        )}
+
+        {isAuthenticated && nombre && (
+          <span className="user-name">👤 {nombre}</span>
         )}
 
         {!isAuthenticated && (

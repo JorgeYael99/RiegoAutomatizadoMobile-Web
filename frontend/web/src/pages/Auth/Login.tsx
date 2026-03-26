@@ -15,8 +15,9 @@ export default function Login() {
     try {
       const response = await loginAPI({ email, password });
       const token = response.data.token;
+      const nombre = response.data.nombre;
           
-      login(token);
+      login(token, nombre);
       navigate("/");
     } catch (error) {
       console.error("Login error:", error);
