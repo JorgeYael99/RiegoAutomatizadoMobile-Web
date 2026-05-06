@@ -11,6 +11,21 @@ CREATE TABLE IF NOT EXISTS users (
     rol VARCHAR(20) DEFAULT 'user'
 );
 
+CREATE TABLE IF NOT EXISTS login_verification_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id VARCHAR(128) NOT NULL UNIQUE,
+    user_id INT NOT NULL,
+    code_hash VARCHAR(255) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    used_at DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_login_codes_session (session_id),
+    INDEX idx_login_codes_user (user_id),
+    CONSTRAINT fk_login_codes_user
+        FOREIGN KEY (user_id) REFERENCES users(id)
+        ON DELETE CASCADE
+);
+
 -- Tabla de productos
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,
