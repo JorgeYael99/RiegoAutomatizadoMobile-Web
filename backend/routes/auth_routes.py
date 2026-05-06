@@ -88,7 +88,11 @@ def verify_email_code():
 
     token = create_access_token(
         identity=str(verification["user_id"]),
-        additional_claims={"rol": verification["rol"]}
+        additional_claims={
+            "rol": verification["rol"],
+            "nombre": verification["nombre"],
+        }
     )
 
-    return jsonify(token=token)
+    user_nombre = verification.get("nombre") or "Usuario"
+    return jsonify(token=token, nombre=user_nombre)

@@ -23,7 +23,7 @@ export default function VerifyLogin() {
 
     verifyEmailCode({ loginSession, code })
       .then((response) => {
-        login(response.data.token);
+        login(response.data.token, response.data.nombre);
         navigate("/", { replace: true });
       })
       .catch(() => {

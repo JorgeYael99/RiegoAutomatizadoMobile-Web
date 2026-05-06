@@ -135,6 +135,16 @@
   font-weight: bold;
 }
 
+.user-name {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.95rem;
+  white-space: nowrap;
+  background: rgba(46, 204, 113, 0.1);
+  padding: 6px 14px;
+  border-radius: 20px;
+}
+
 /* ============================= */
 /* MENÚ MÓVIL RESPONSIVO         */
 /* ============================= */
@@ -235,5 +245,9 @@
 
 .admin-nav-links .btn-logout:hover {
   background: #ef4444;
+  color: white;
+}
+
+.admin-name {
   color: white;
 }

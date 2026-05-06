@@ -65,7 +65,7 @@ class LoginVerification:
 
         cursor.execute(
             """
-            SELECT lvc.*, u.rol
+            SELECT lvc.*, u.rol, u.nombre
             FROM login_verification_codes lvc
             JOIN users u ON u.id = lvc.user_id
             WHERE lvc.session_id = %s
@@ -99,4 +99,8 @@ class LoginVerification:
         cursor.close()
         conn.close()
 
-        return {"user_id": record["user_id"], "rol": record["rol"]}
+        return {
+            "user_id": record["user_id"],
+            "rol": record["rol"],
+            "nombre": record["nombre"],
+        }

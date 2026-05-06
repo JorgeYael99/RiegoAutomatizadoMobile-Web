@@ -59,7 +59,7 @@ export default function ProductCard({ id, name, price, image, description }: Pro
           <div className="flip-card-back">
             <div className="back-content">
               <h5>Descripción</h5>
-              <p>{description}</p>
+              <p>{description }</p>
             </div>
           </div>
 
