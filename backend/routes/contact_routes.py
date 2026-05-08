@@ -6,6 +6,7 @@ from flask import Blueprint, request, jsonify
 from models.contact_model import ContactMessage
 from flask_jwt_extended import jwt_required, get_jwt
 import config
+from services.email_service import EmailConfigurationError, send_contact_notification
 
 contact_bp = Blueprint("contact", __name__)
 
@@ -65,6 +66,20 @@ def send_message():
         
         # Crear mensaje
         message_id = ContactMessage.create(nombre, email, asunto, mensaje)
+        try:
+            send_contact_notification(nombre, email, asunto, mensaje)
+        except EmailConfigurationError as e:
+            print("ERROR email configuration:", e)
+            return jsonify({
+                "error": "Mensaje guardado, pero el correo no esta configurado en el servidor",
+                "id": message_id
+            }), 503
+        except Exception as e:
+            print("ERROR sending contact email:", e)
+            return jsonify({
+                "error": "Mensaje guardado, pero no se pudo enviar el correo",
+                "id": message_id
+            }), 502
         
         return jsonify({
             "message": "Mensaje enviado correctamente",

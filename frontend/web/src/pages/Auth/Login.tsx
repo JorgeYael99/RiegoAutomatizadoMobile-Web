@@ -5,6 +5,7 @@ import {
   getCaptcha,
   login as loginAPI,
 } from "../../api/auth";
+import axios from "axios";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -43,11 +44,10 @@ export default function Login() {
       setLoginSession(response.data.loginSession);
     } catch (error) {
       console.error("Login error:", error);
-      alert(
-        loginSession
-          ? "Revisa el enlace enviado a tu correo"
-          : "Credenciales o captcha incorrectos, intente de nuevo"
-      );
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.msg
+        : null;
+      alert(message || "Credenciales o captcha incorrectos, intente de nuevo");
       if (!loginSession) {
         loadCaptcha().catch(() => undefined);
       }

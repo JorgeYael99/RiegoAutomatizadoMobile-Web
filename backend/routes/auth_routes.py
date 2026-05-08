@@ -10,7 +10,11 @@ import config
 from models.login_verification_model import LoginVerification
 from models.registration_verification_model import RegistrationVerification
 from models.user_model import User
-from services.email_service import send_login_confirmation, send_registration_confirmation
+from services.email_service import (
+    EmailConfigurationError,
+    send_login_confirmation,
+    send_registration_confirmation,
+)
 
 auth = Blueprint("auth", __name__)
 
@@ -64,7 +68,14 @@ def register():
         f"{config.FRONTEND_URL.rstrip('/')}/verify-register?"
         f"{urlencode({'session': session_id, 'code': code})}"
     )
-    send_registration_confirmation(data["email"], confirmation_url)
+    try:
+        send_registration_confirmation(data["email"], confirmation_url)
+    except EmailConfigurationError as e:
+        print("ERROR email configuration:", e)
+        return jsonify(msg="El correo no esta configurado en el servidor"), 503
+    except Exception as e:
+        print("ERROR sending registration email:", e)
+        return jsonify(msg="No se pudo enviar el correo de confirmacion"), 502
 
     return jsonify(
         requiresEmailVerification=True,
@@ -116,7 +127,14 @@ def login():
         f"{config.FRONTEND_URL.rstrip('/')}/verify-login?"
         f"{urlencode({'session': session_id, 'code': code})}"
     )
-    send_login_confirmation(user["email"], confirmation_url)
+    try:
+        send_login_confirmation(user["email"], confirmation_url)
+    except EmailConfigurationError as e:
+        print("ERROR email configuration:", e)
+        return jsonify(msg="El correo no esta configurado en el servidor"), 503
+    except Exception as e:
+        print("ERROR sending login email:", e)
+        return jsonify(msg="No se pudo enviar el correo de confirmacion"), 502
 
     return jsonify(
         requiresEmailVerification=True,

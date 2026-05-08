@@ -15,6 +15,7 @@ SMTP_USER = os.getenv("SMTP_USER", "")
 SMTP_PASSWORD = os.getenv("SMTP_PASSWORD", "")
 SMTP_FROM = os.getenv("SMTP_FROM", SMTP_USER)
 SMTP_USE_TLS = os.getenv("SMTP_USE_TLS", "true").lower() == "true"
+CONTACT_RECIPIENT_EMAIL = os.getenv("CONTACT_RECIPIENT_EMAIL", SMTP_FROM)
 FRONTEND_URL = os.getenv("FRONTEND_URL", "https://riego-automatizado-mobile-web.vercel.app")
 
 DB_HOST = os.getenv("DB_HOST", "")

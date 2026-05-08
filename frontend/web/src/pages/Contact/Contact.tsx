@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"; 
+import axios from "axios";
 import "./Contact.css";
 import { sendContactMessage } from "../../api/contact";
 
@@ -96,7 +97,10 @@ export default function Contact() {
       }
     } catch (error) {
       console.error("Error enviando mensaje:", error);
-      setSubmitMessage("Error al enviar el mensaje. Intenta de nuevo.");
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.error
+        : null;
+      setSubmitMessage(message || "Error al enviar el mensaje. Intenta de nuevo.");
     } finally {
       setIsSubmitting(false);
     }

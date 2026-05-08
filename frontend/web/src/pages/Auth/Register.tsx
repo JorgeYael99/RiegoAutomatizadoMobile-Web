@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import axios from "axios";
 import { getCaptcha, register as registerAPI } from "../../api/auth";
 import "./Auth.css";
 
@@ -39,7 +40,10 @@ export default function Register() {
       });
       setRegistrationSent(true);
     } catch (error) {
-      alert("Error al registrarse. Revisa el captcha o intenta con otro correo.");
+      const message = axios.isAxiosError(error)
+        ? error.response?.data?.msg
+        : null;
+      alert(message || "Error al registrarse. Revisa el captcha o intenta con otro correo.");
       loadCaptcha().catch(() => undefined);
     } finally {
       setIsLoading(false);
