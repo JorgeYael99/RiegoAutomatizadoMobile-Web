@@ -13,3 +13,6 @@ export const getCaptcha = () =>
 
 export const verifyEmailCode = (data: any) =>
   axios.post(`${API}/verify-email-code`, data);
+
+export const verifyRegister = (data: any) =>
+  axios.post(`${API}/verify-register`, data);

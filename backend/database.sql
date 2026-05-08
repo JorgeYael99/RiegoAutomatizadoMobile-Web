@@ -26,6 +26,20 @@ CREATE TABLE IF NOT EXISTS login_verification_codes (
         ON DELETE CASCADE
 );
 
+CREATE TABLE IF NOT EXISTS registration_verification_codes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id VARCHAR(128) NOT NULL UNIQUE,
+    nombre VARCHAR(100) NOT NULL,
+    email VARCHAR(100) NOT NULL,
+    password_hash VARCHAR(255) NOT NULL,
+    code_hash VARCHAR(255) NOT NULL,
+    expires_at DATETIME NOT NULL,
+    used_at DATETIME NULL,
+    created_at DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_registration_codes_session (session_id),
+    INDEX idx_registration_codes_email (email)
+);
+
 -- Tabla de productos
 CREATE TABLE IF NOT EXISTS products (
     id INT AUTO_INCREMENT PRIMARY KEY,

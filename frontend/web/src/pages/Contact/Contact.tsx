@@ -1,9 +1,30 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion"; 
 import "./Contact.css";
 import { sendContactMessage } from "../../api/contact";
 
+declare global {
+  interface Window {
+    grecaptcha?: {
+      render: (
+        container: HTMLElement,
+        parameters: {
+          sitekey: string;
+          callback: (token: string) => void;
+          "expired-callback": () => void;
+          "error-callback": () => void;
+        }
+      ) => number;
+      reset: (widgetId?: number) => void;
+    };
+  }
+}
+
+const RECAPTCHA_SITE_KEY = "6LfIfOAsAAAAAEAmY2yrKLr4q6dMq3jlKCL3cBE9";
+
 export default function Contact() {
+  const captchaRef = useRef<HTMLDivElement | null>(null);
+  const captchaWidgetId = useRef<number | null>(null);
   const [formData, setFormData] = useState({
     nombre: "",
     email: "",
@@ -13,6 +34,37 @@ export default function Contact() {
 
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState("");
+  const [captchaToken, setCaptchaToken] = useState<string | null>(null);
+
+  useEffect(() => {
+    let intervalId: number | undefined;
+
+    const renderCaptcha = () => {
+      if (!captchaRef.current || !window.grecaptcha || captchaWidgetId.current !== null) {
+        return;
+      }
+
+      captchaWidgetId.current = window.grecaptcha.render(captchaRef.current, {
+        sitekey: RECAPTCHA_SITE_KEY,
+        callback: (token: string) => setCaptchaToken(token),
+        "expired-callback": () => setCaptchaToken(null),
+        "error-callback": () => setCaptchaToken(null)
+      });
+
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
+    };
+
+    renderCaptcha();
+    intervalId = window.setInterval(renderCaptcha, 300);
+
+    return () => {
+      if (intervalId) {
+        window.clearInterval(intervalId);
+      }
+    };
+  }, []);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -21,6 +73,11 @@ export default function Contact() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!captchaToken) {
+      setSubmitMessage("Por favor confirma que no eres un robot.");
+      return;
+    }
+
     setIsSubmitting(true);
     setSubmitMessage("");
     try {
@@ -28,10 +85,15 @@ export default function Contact() {
         nombre: formData.nombre,
         email: formData.email,
         asunto: formData.asunto,
-        mensaje: formData.mensaje
+        mensaje: formData.mensaje,
+        captchaToken
       });
       setSubmitMessage("¡Mensaje enviado con éxito! Te contactaremos pronto.");
       setFormData({ nombre: "", email: "", asunto: "", mensaje: "" });
+      setCaptchaToken(null);
+      if (window.grecaptcha && captchaWidgetId.current !== null) {
+        window.grecaptcha.reset(captchaWidgetId.current);
+      }
     } catch (error) {
       console.error("Error enviando mensaje:", error);
       setSubmitMessage("Error al enviar el mensaje. Intenta de nuevo.");
@@ -108,6 +170,8 @@ export default function Contact() {
                 required
               />
             </div>
+
+            <div className="recaptcha-container" ref={captchaRef} />
 
             <button 
               type="submit" 

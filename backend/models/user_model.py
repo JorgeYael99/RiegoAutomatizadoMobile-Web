@@ -5,14 +5,17 @@ class User:
     
     @staticmethod
     def create(nombre, email, password):
+        hashed_password = generate_password_hash(password)
+        User.create_with_hash(nombre, email, hashed_password)
+
+    @staticmethod
+    def create_with_hash(nombre, email, password_hash):
         conn = get_db_connection()
         cursor = conn.cursor()
 
-        hashed_password = generate_password_hash(password)
-
         cursor.execute(
             "INSERT INTO users (nombre, email, password_hash) VALUES (%s, %s, %s)",
-            (nombre, email, hashed_password)
+            (nombre, email, password_hash)
         )
 
         conn.commit()

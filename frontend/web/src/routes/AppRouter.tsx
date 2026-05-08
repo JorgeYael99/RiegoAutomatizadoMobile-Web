@@ -10,6 +10,7 @@ import Contact from "../pages/Contact/Contact";
 import Login from "../pages/Auth/Login";
 import Register from "../pages/Auth/Register";
 import VerifyLogin from "../pages/Auth/VerifyLogin";
+import VerifyRegister from "../pages/Auth/VerifyRegister";
 import AdminRoute from "./AdminRoute";
 import AdminLayout from "../pages/Admin/AdminLayout";
 import Dashboard from "../pages/Admin/Dashboard";
@@ -38,6 +39,7 @@ function AppContent() {
         {/* Auth */}
         <Route path="/login" element={<Login />} />
         <Route path="/verify-login" element={<VerifyLogin />} />
+        <Route path="/verify-register" element={<VerifyRegister />} />
         <Route path="/register" element={<Register />} />
 
         {/* Admin */}

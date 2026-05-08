@@ -101,6 +101,13 @@
   transition: transform 0.2s;
 }
 
+.recaptcha-container {
+  min-height: 78px;
+  display: flex;
+  align-items: center;
+  overflow-x: auto;
+}
+
 .btn-submit-modern:hover {
   background: #2d6336;
   transform: translateY(-2px);

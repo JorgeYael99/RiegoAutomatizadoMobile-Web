@@ -14,6 +14,7 @@ export const sendContactMessage = (data: {
   email: string;
   asunto: string;
   mensaje: string;
+  captchaToken: string | null;
 }) => axios.post(`${API_URL}`, data);
 
 // Admin: SÍ necesitan token

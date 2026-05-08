@@ -1,7 +1,38 @@
+import json
+import urllib.parse
+import urllib.request
+
 from flask import Blueprint, request, jsonify
 from models.contact_model import ContactMessage
 from flask_jwt_extended import jwt_required, get_jwt
+import config
+
 contact_bp = Blueprint("contact", __name__)
+
+
+def verify_recaptcha(captcha_token):
+    if not config.RECAPTCHA_SECRET_KEY:
+        print("RECAPTCHA_SECRET_KEY no está configurada")
+        return False
+
+    payload = urllib.parse.urlencode({
+        "secret": config.RECAPTCHA_SECRET_KEY,
+        "response": captcha_token
+    }).encode()
+
+    req = urllib.request.Request(
+        "https://www.google.com/recaptcha/api/siteverify",
+        data=payload,
+        headers={"Content-Type": "application/x-www-form-urlencoded"},
+        method="POST"
+    )
+
+    with urllib.request.urlopen(req, timeout=8) as response:
+        result = json.loads(response.read().decode("utf-8"))
+
+    return bool(result.get("success"))
+
+
 # 🔹 Enviar mensaje de contacto (PÚBLICO - sin autenticación)
 @contact_bp.route("", methods=["POST"])
 def send_message():
@@ -10,6 +41,10 @@ def send_message():
         
         if not data:
             return jsonify({"error": "JSON inválido o vacío"}), 400
+
+        captcha_token = data.get("captchaToken")
+        if not captcha_token or not verify_recaptcha(captcha_token):
+            return jsonify({"error": "Captcha inválido"}), 400
         
         # Validar campos obligatorios
         required_fields = ["nombre", "email", "asunto", "mensaje"]
@@ -24,7 +59,7 @@ def send_message():
         mensaje = str(data["mensaje"]).strip()
         
         # Validar asunto permitido
-        asuntos_permitidos = ["problema-producto", "duda-general"]
+        asuntos_permitidos = ["problema-producto", "duda-general", "colaboracion"]
         if asunto not in asuntos_permitidos:
             return jsonify({"error": "Asunto no válido"}), 400
         
