@@ -51,9 +51,12 @@ CREATE TABLE IF NOT EXISTS products (
 );
 
 -- Insertar usuario admin de prueba (contraseña: admin123)
--- Nota: El hash debe generarse con werkzeug, este es un placeholder
-INSERT INTO users (nombre, email, password_hash, rol) VALUES 
-('Administrador', 'admin@huertosmart.com', 'scrypt:32768:8:1$placeholder$hash', 'admin');
+INSERT INTO users (nombre, email, password_hash, rol) VALUES
+('Administrador', 'admin@huertosmart.com', 'scrypt:32768:8:1$rkla0Zhu6NlV3mkI$a544fe897a5afb69c71b330fbbac2b2f6a0dacd613854ebda2f8003f1d8f92c729a24c37ce67d07ccbbfbeeeb2dd95d6762ba2927d93c7b52e357aef931cf729', 'admin')
+ON DUPLICATE KEY UPDATE
+    nombre = VALUES(nombre),
+    password_hash = VALUES(password_hash),
+    rol = VALUES(rol);
 
 -- Insertar algunos productos de ejemplo
 INSERT INTO products (nombre, descripcion, precio, stock, imagen_url) VALUES 

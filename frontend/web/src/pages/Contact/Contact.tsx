@@ -20,7 +20,7 @@ declare global {
   }
 }
 
-const RECAPTCHA_SITE_KEY = "6LfIfOAsAAAAAEAmY2yrKLr4q6dMq3jlKCL3cBE9";
+const RECAPTCHA_SITE_KEY = import.meta.env.VITE_RECAPTCHA_SITE_KEY ?? "";
 
 export default function Contact() {
   const captchaRef = useRef<HTMLDivElement | null>(null);
